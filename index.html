@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<!--
+  Jared Bridgewater · Logbook
+  ===========================
+  One file: HTML for structure, CSS for looks, and a few lines of JavaScript
+  for the French toggle at the very bottom.
+
+  HOW TO READ THIS FILE
+  Every section has a comment explaining what it is and which HTML/CSS idea it
+  uses. Search for "LEARN:" to jump between the explanations.
+
+  HOW TO EDIT
+  Anything in [brackets] is a placeholder for you to replace with your own words.
+-->
+<html lang="en">
+<head>
+  <!-- LEARN: <head> holds information ABOUT the page. Nothing in here shows up on screen. -->
+  <meta charset="utf-8">
+  <!-- LEARN: This line makes the page fit phone screens instead of showing a tiny desktop page. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jared Bridgewater · Logbook</title>
+  <meta name="description" content="A public logbook of what I'm building, reading and learning.">
+
+  <style>
+    /* ================================================================
+       LEARN: CSS VARIABLES (custom properties)
+       Every color and font is defined once, here, on :root (the whole page).
+       Everywhere else uses var(--name). Change a color here and it changes
+       everywhere. This is how real design systems work.
+       ================================================================ */
+    :root {
+      --canvas: #F5F5F7;        /* page background, Apple's light gray */
+      --surface: #FFFFFF;       /* cards */
+      --ink: #1D1D1F;           /* main text */
+      --ink-2: #515154;         /* secondary text */
+      --ink-3: #86868B;         /* labels, dates */
+      --line: #E5E5EA;          /* hairline borders */
+      --accent: #0071E3;        /* links */
+      --good: #248A3D;          /* "active" status */
+      --shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.04);
+
+      /* LEARN: a "font stack" lists fonts in order of preference. The browser
+         uses the first one installed. These are all built into Macs, Windows
+         and phones, so nothing has to download. */
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --serif: ui-serif, "New York", "Iowan Old Style", Charter, Georgia, serif;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+      --radius: 18px;
+      --page: 1040px;           /* widest the content gets */
+    }
+
+    /* LEARN: MEDIA QUERY. Everything inside only applies when the visitor's
+       device is in dark mode. We just swap the variables; the rest of the CSS
+       doesn't need to change at all. */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --canvas: #000000;
+        --surface: #1C1C1E;
+        --ink: #F5F5F7;
+        --ink-2: #A1A1A6;
+        --ink-3: #6E6E73;
+        --line: #2C2C2E;
+        --accent: #2997FF;
+        --good: #30D158;
+        --shadow: none;
+      }
+    }
+
+    /* LEARN: box-sizing: border-box makes width include padding and border.
+       Without it, a 300px box with 20px padding is secretly 340px wide. */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    /* LEARN: :focus-visible shows an outline only for keyboard users, so people
+       who navigate with Tab can see where they are. Never remove focus styles. */
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+    img { max-width: 100%; display: block; }
+
+    /* LEARN: a reusable "wrapper" class. It centers content and caps its width.
+       max() picks the larger value, so the side padding is never under 20px. */
+    .wrap {
+      width: 100%;
+      max-width: var(--page);
+      margin: 0 auto;
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+    }
+
+    /* ---------- Small reusable pieces ---------- */
+
+    /* The monospace [TAG] labels */
+    .tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .04em;
+      color: var(--ink-3);
+      text-transform: uppercase;
+    }
+    .tag::before { content: "["; }
+    .tag::after  { content: "]"; }
+    /* LEARN: ::before and ::after add content with CSS alone. The brackets
+       aren't in the HTML; CSS draws them on every .tag. */
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-2);
+    }
+    .status::before {
+      content: "";
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--ink-3);
+    }
+    .status.active::before { background: var(--good); }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+      padding: 28px;
+    }
+
+    /* Section headings */
+    /* LEARN: padding-top only. The shorthand "padding: 72px 0 0" would also set the
+       left/right padding to 0 and wipe out the .wrap side margins on phones. */
+    .section { padding-top: 72px; }
+    .section-head { margin-bottom: 28px; max-width: 640px; }
+    .section-head h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin: 8px 0 10px;
+      font-weight: 700;
+      text-wrap: balance;
+    }
+    /* LEARN: clamp(min, preferred, max) makes text grow with the screen
+       (4vw = 4% of the window width) but never smaller than 28px or bigger than 40px. */
+    .section-head p { margin: 0; color: var(--ink-2); }
+
+    /* ================================================================
+       NAVIGATION
+       LEARN: position: sticky keeps the bar at the top while you scroll.
+       backdrop-filter blurs whatever scrolls underneath, like Apple's menus.
+       ================================================================ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: color-mix(in srgb, var(--canvas) 80%, transparent);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      height: 52px;
+    }
+    .brand { font-weight: 600; color: var(--ink); font-size: 15px; white-space: nowrap; }
+    .nav ul {
+      list-style: none;
+      display: flex;
+      gap: 22px;
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      overflow-x: auto;      /* on small phones the links scroll sideways */
+      scrollbar-width: none;
+    }
+    .nav ul a { color: var(--ink-2); white-space: nowrap; }
+    .nav ul a:hover { color: var(--ink); text-decoration: none; }
+
+    /* ================================================================
+       HERO
+       ================================================================ */
+    .hero { padding-top: 88px; padding-bottom: 8px; }
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: 1.04;
+      letter-spacing: -.02em;
+      margin: 14px 0 20px;
+      max-width: 14ch;      /* LEARN: ch = width of the "0" character, a good way to size text blocks */
+      text-wrap: balance;
+    }
+    .hero .lede {
+      font-family: var(--serif);
+      font-size: clamp(19px, 2.2vw, 23px);
+      color: var(--ink-2);
+      max-width: 36em;
+      margin: 0;
+    }
+
+    /* "Right now" strip, like the "currently reading" panels on Gates Notes */
+    .now {
+      margin-top: 44px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--line);       /* the 1px gap shows this color = hairline dividers */
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    /* LEARN: CSS GRID. repeat(auto-fit, minmax(220px, 1fr)) means "fit as many
+       columns as you can, each at least 220px wide, and share leftover space."
+       Four columns on a laptop, two on a tablet, one on a phone, no extra code. */
+    .now div { background: var(--surface); padding: 18px 20px; }
+    .now .tag { display: block; margin-bottom: 4px; }
+    .now strong { font-weight: 600; font-size: 15px; }
+
+    /* ================================================================
+       PROJECTS
+       ================================================================ */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .projects .featured { grid-column: 1 / -1; }   /* LEARN: span from the first grid line to the last */
+
+    .project { display: flex; flex-direction: column; gap: 14px; }
+    .project-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .project h3 { font-size: 22px; line-height: 1.25; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+    .featured h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(24px, 3vw, 30px); max-width: 44ch; }
+    .project p { margin: 0; color: var(--ink-2); }
+    .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+    .stack li {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--canvas);
+      color: var(--ink-2);
+    }
+
+    /* A single dated log entry inside a project */
+    .log {
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 12px;
+      font-size: 15px;
+    }
+    .log time { font-family: var(--mono); font-size: 12px; color: var(--ink-3); padding-top: 3px; }
+    .log p { color: var(--ink); }
+
+    .links { display: flex; gap: 18px; flex-wrap: wrap; font-size: 15px; margin-top: auto; }
+
+    /* French toggle button */
+    .lang-toggle {
+      font: inherit;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      background: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* ================================================================
+       EXPLORATIONS
+       ================================================================ */
+    .explore {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .explore .card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+    .explore .body { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 8px; }
+    .explore h3 { margin: 0; font-size: 19px; }
+    .explore p { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+    /* Image placeholder. Replace the <div class="figure"> with <img src="..." alt="..."> later. */
+    .figure {
+      aspect-ratio: 4 / 3;
+      background:
+        linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 24px 24px,
+        linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 24px 24px,
+        var(--canvas);
+      display: grid;
+      place-items: center;
+      color: var(--ink-3);
+      font-family: var(--mono);
+      font-size: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    /* LEARN: two gradients stacked = graph paper. No image file needed. */
+
+    /* ================================================================
+       READING LOG (the Gates Notes part)
+       ================================================================ */
+    .book {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 36px;
+      padding: 36px;
+    }
+    .book + .book { margin-top: 20px; }
+
+    /* A book cover drawn with CSS */
+    .cover {
+      aspect-ratio: 2 / 3;
+      border-radius: 4px 10px 10px 4px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      box-shadow: inset 6px 0 0 rgba(0,0,0,.18), 0 10px 24px rgba(0,0,0,.12);
+    }
+    .cover b { font-family: var(--serif); font-weight: 500; font-size: 19px; line-height: 1.15; }
+    .cover small { font-size: 11px; opacity: .8; letter-spacing: .02em; }
+    .cover.code { background: #2B3A55; }
+    .cover.goggins { background: #3B3B3B; }
+
+    .book h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; margin: 6px 0 2px; letter-spacing: -.01em; }
+    .book .byline { color: var(--ink-3); font-size: 15px; margin: 0 0 18px; }
+
+    .note { margin: 0; }
+    .note + .note { margin-top: 22px; }
+    .note dt { margin-bottom: 6px; }
+    .note dd {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 62ch;
+    }
+    .note ul { margin: 0; padding-left: 1.1em; }
+    .note li + li { margin-top: 6px; }
+    .placeholder { color: var(--ink-3); font-style: italic; }
+
+    .progress { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-3); margin-bottom: 18px; }
+    .bar { flex: 1; max-width: 220px; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
+    .bar i { display: block; height: 100%; background: var(--ink); }
+
+    /* ================================================================
+       FRENCH
+       ================================================================ */
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin: 18px 0 10px;
+    }
+    .levels span {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 10px 0;
+      border-radius: 10px;
+      background: var(--canvas);
+      color: var(--ink-3);
+    }
+    .levels .done { background: var(--ink); color: var(--surface); }
+    .levels .now-level { outline: 2px solid var(--ink); outline-offset: -2px; color: var(--ink); background: var(--surface); }
+    .levels .goal { color: var(--accent); }
+    .french-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
+    .french-grid ul { margin: 0; padding-left: 1.1em; color: var(--ink-2); }
+
+    /* ================================================================
+       OFF THE DESK (running)
+       ================================================================ */
+    .athlete { display: grid; grid-template-columns: 1.3fr 1fr; gap: 36px; align-items: start; }
+    .athlete p { font-family: var(--serif); font-size: 19px; margin: 0; color: var(--ink); max-width: 34em; }
+    .athlete p + p { margin-top: 14px; }
+    .splits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border-radius: 14px; overflow: hidden; }
+    .splits div { background: var(--surface); padding: 16px 18px; }
+    .splits b { display: block; font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+    .splits small { color: var(--ink-3); font-size: 13px; }
+
+    /* ================================================================
+       FOOTER
+       ================================================================ */
+    footer {
+      margin-top: 96px;
+      padding: 36px 0 56px;
+      border-top: 1px solid var(--line);
+      color: var(--ink-3);
+      font-size: 14px;
+    }
+    footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    footer a { color: var(--ink-2); }
+
+    /* ================================================================
+       LEARN: RESPONSIVE BREAKPOINTS
+       Below 760px wide (tablets and phones), two-column layouts become one.
+       Design for the big screen, then fix what breaks when it gets narrow.
+       ================================================================ */
+    @media (max-width: 760px) {
+      .projects, .french-grid, .athlete { grid-template-columns: 1fr; }
+      .book { grid-template-columns: 1fr; gap: 20px; padding: 26px; }
+      .cover { width: 120px; }
+      .card { padding: 22px; }
+      .log { grid-template-columns: 1fr; gap: 2px; }
+      .hero { padding-top: 56px; }
+      .brand { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- LEARN: SEMANTIC HTML. <nav>, <header>, <main>, <section>, <article> and
+       <footer> work like <div>, but they tell browsers, search engines and
+       screen readers what each part IS. Use them instead of plain <div>s. -->
+
+  <nav class="nav" aria-label="Main">
+    <div class="wrap">
+      <a class="brand" href="#top">Jared Bridgewater</a>
+      <ul>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#explorations">Explorations</a></li>
+        <li><a href="#reading">Reading</a></li>
+        <li><a href="#francais">Français</a></li>
+        <li><a href="#running">Running</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- ===================== HERO ===================== -->
+    <header class="hero wrap">
+      <span class="tag">Logbook</span>
+      <h1>Notes on learning how things work.</h1>
+      <p class="lede">
+        A public record of what I'm building, reading and figuring out, written down
+        as I go so I can see how my thinking changes. Most of it is unfinished. That's the point.
+      </p>
+
+      <!-- LEARN: these four boxes are one CSS grid. Resize the window to watch them rearrange. -->
+      <div class="now" aria-label="Right now">
+        <div><span class="tag">Building</span><strong>A day counter from a found circuit board</strong></div>
+        <div><span class="tag">Researching</span><strong>Safer blind-crest intersections</strong></div>
+        <div><span class="tag">Reading</span><strong>Code, by Charles Petzold</strong></div>
+        <div><span class="tag">Training</span><strong>Cross country season</strong></div>
+      </div>
+    </header>
+
+    <!-- ===================== PROJECTS ===================== -->
+    <section class="section wrap" id="projects" aria-labelledby="projects-title">
+      <div class="section-head">
+        <span class="tag">Projects</span>
+        <h2 id="projects-title">Things I'm building</h2>
+        <p>Each one has its code on GitHub and a running log of what went wrong and what I learned.</p>
+      </div>
+
+      <div class="projects">
+
+        <!-- Featured project: spans both columns -->
+        <article class="card project featured">
+          <div class="project-top">
+            <span class="tag">AP Research</span>
+            <span class="status active">In progress</span>
+          </div>
+          <h3>Using localized, sensor-driven dynamic traffic signal phasing simulations to reduce vehicle conflict points and improve safety at blind-crest intersections with flashing yellow arrows</h3>
+          <p>
+            At a blind crest, drivers turning on a flashing yellow arrow can't see oncoming cars until it's almost too late.
+            I'm simulating whether sensors that change the signal phasing in real time can cut down on those conflicts.
+          </p>
+          <ul class="stack">
+            <li>Eclipse SUMO</li><li>Python</li><li>TraCI</li><li>netconvert</li>
+          </ul>
+          <div class="log">
+            <time datetime="2026-10">Oct 2026</time>
+            <p>[Latest log entry. For example: the first speed chart looked wrong because the loop logged the same queued cars on every timestep. Fixed by logging each vehicle once per detector.]</p>
+          </div>
+          <div class="links">
+            <a href="https://github.com/GubbGub/dynamic-fya-crest-controller">Code on GitHub →</a>
+          </div>
+        </article>
+
+        <article class="card project" id="runner-thermo">
+          <div class="project-top">
+            <span class="tag">Project</span>
+            <!-- LEARN: data-target says which block of text this button swaps. The script at the bottom reads it. -->
+            <button class="lang-toggle" type="button" data-target="runner-thermo-text" aria-pressed="false">Lire en français</button>
+          </div>
+          <h3>Runner Thermo</h3>
+          <div id="runner-thermo-text">
+            <p data-lang="en">
+              An AP Physics II lab, rebuilt as a Java app. It works out how much power a sprinter produces in horsepower,
+              and flags stopwatch times that would beat Usain Bolt.
+            </p>
+            <p data-lang="fr" lang="fr" hidden>
+              Un labo de physique (AP Physics II) transformé en application Java. Elle calcule la puissance d'un sprinteur
+              en chevaux-vapeur et signale les chronos qui battraient Usain Bolt.
+            </p>
+          </div>
+          <ul class="stack"><li>Java</li><li>Swing</li><li>jpackage</li></ul>
+          <div class="log">
+            <time datetime="2026-10">Oct 2026</time>
+            <p>Our class got 2.91 hp for one runner. The app says 2.92. The other runner's times turned out to be faster than Bolt's, so the stopwatch was off.</p>
+          </div>
+          <div class="links"><a href="https://github.com/GubbGub/runner-thermo-sim">Code on GitHub →</a></div>
+        </article>
+
+        <article class="card project">
+          <div class="project-top">
+            <span class="tag">Project</span>
+            <span class="status active">In progress</span>
+          </div>
+          <h3>Day Counter</h3>
+          <p>
+            A pool-heater circuit board I found on my kitchen counter, being reprogrammed into a desk counter.
+            It runs on a PIC16F73 microcontroller, and I'm mapping the board one pin at a time.
+          </p>
+          <ul class="stack"><li>PIC16F73</li><li>XC8 / C</li><li>Fusion</li></ul>
+          <div class="log">
+            <time datetime="2026-10">Oct 2026</time>
+            <p>[Latest log entry. For example: traced the display segments back to the chip.]</p>
+          </div>
+          <div class="links"><a href="https://github.com/GubbGub/day-counter">Code on GitHub →</a></div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===================== EXPLORATIONS ===================== -->
+    <section class="section wrap" id="explorations" aria-labelledby="explore-title">
+      <div class="section-head">
+        <span class="tag">Explorations</span>
+        <h2 id="explore-title">Where art and engineering meet</h2>
+        <p>Things that started as drawing or music and turned into questions about how they work.</p>
+      </div>
+
+      <div class="explore">
+        <article class="card">
+          <!-- LEARN: to add your real drawing, replace the next line with:
+               <img src="images/light-switch.jpg" alt="Pencil drawing of a light switch beside its circuit diagram"> -->
+          <div class="figure" role="img" aria-label="Placeholder for the light switch drawing">drawing goes here</div>
+          <div class="body">
+            <span class="tag">Drawing → Circuit</span>
+            <h3>A light switch, inside and out</h3>
+            <p>I drew a mechanical light switch, then got curious about what happens when you flip it. So I mapped out its internal circuit diagram.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="figure" role="img" aria-label="Placeholder for guitar theory notes">notes go here</div>
+          <div class="body">
+            <span class="tag">Guitar</span>
+            <h3>[Guitar theory notes]</h3>
+            <p>[What you're learning: scales, why certain chords sound good together, the physics of a vibrating string.]</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="figure" role="img" aria-label="Placeholder for pixel art">pixel art goes here</div>
+          <div class="body">
+            <span class="tag">Pixel art</span>
+            <h3>[Pixel art]</h3>
+            <p>[What you made, what tool you used, and what working on a grid taught you.]</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== READING LOG ===================== -->
+    <section class="section wrap" id="reading" aria-labelledby="reading-title">
+      <div class="section-head">
+        <span class="tag">Reading log</span>
+        <h2 id="reading-title">What I'm reading</h2>
+        <p>Not reviews. Notes on what each book argues, what stuck with me, and where it showed up in my own life.</p>
+      </div>
+
+      <!-- LEARN: <dl> is a "description list": <dt> is the term, <dd> its description.
+           It's the right tag for label/answer pairs like Core thesis / Takeaways. -->
+      <article class="card book">
+        <div class="cover code" aria-hidden="true">
+          <b>Code</b>
+          <small>Charles Petzold</small>
+        </div>
+        <div>
+          <span class="tag">Computer science</span>
+          <h3>Code</h3>
+          <p class="byline">The Hidden Language of Computer Hardware and Software · Charles Petzold</p>
+          <div class="progress"><span>Finished</span><span class="bar"><i style="width:100%"></i></span></div>
+
+          <dl class="note">
+            <dt class="tag">Core thesis</dt>
+            <dd>A computer isn't magic. It's simple ideas stacked on top of each other: Morse code, flashlights, relays, logic gates, binary, memory, until you've built a working processor from switches you can understand.</dd>
+          </dl>
+          <dl class="note">
+            <dt class="tag">My key takeaways</dt>
+            <dd>
+              <ul>
+                <li class="placeholder">[Takeaway one]</li>
+                <li class="placeholder">[Takeaway two]</li>
+                <li class="placeholder">[Takeaway three]</li>
+              </ul>
+            </dd>
+          </dl>
+          <dl class="note">
+            <dt class="tag">Personal intersections</dt>
+            <dd>This book is why I wasn't scared of the circuit board on my counter. Once you've seen a computer built out of relays on paper, a 28-pin chip is just more of the same idea. <span class="placeholder">[Add your own thoughts.]</span></dd>
+          </dl>
+        </div>
+      </article>
+
+      <article class="card book">
+        <div class="cover goggins" aria-hidden="true">
+          <b>Can't Hurt Me</b>
+          <small>David Goggins</small>
+        </div>
+        <div>
+          <span class="tag">Discipline</span>
+          <h3>Can't Hurt Me</h3>
+          <p class="byline">Master Your Mind and Defy the Odds · David Goggins</p>
+          <div class="progress"><span>[Reading]</span><span class="bar"><i style="width:40%"></i></span></div>
+
+          <dl class="note">
+            <dt class="tag">Core thesis</dt>
+            <dd>Most people quit long before they reach their real limit. Goggins argues that you build mental toughness on purpose, by choosing hard things and holding yourself accountable, the way you'd build a callus.</dd>
+          </dl>
+          <dl class="note">
+            <dt class="tag">My key takeaways</dt>
+            <dd>
+              <ul>
+                <li class="placeholder">[Takeaway one]</li>
+                <li class="placeholder">[Takeaway two]</li>
+              </ul>
+            </dd>
+          </dl>
+          <dl class="note">
+            <dt class="tag">Personal intersections</dt>
+            <dd class="placeholder">[Where this showed up for you, for example the last mile of a cross country race or a project that kept failing.]</dd>
+          </dl>
+        </div>
+      </article>
+    </section>
+
+    <!-- ===================== FRENCH ===================== -->
+    <section class="section wrap" id="francais" lang="fr" aria-labelledby="fr-title">
+      <!-- LEARN: lang="fr" tells screen readers to pronounce this section in French. -->
+      <div class="section-head">
+        <span class="tag">Français</span>
+        <h2 id="fr-title">En route vers le B2</h2>
+        <p lang="en">Tracking my French toward B2 fluency. Some project notes on this site can be read in French; look for the <em>Lire en français</em> button.</p>
+      </div>
+
+      <div class="card">
+        <!-- LEARN: the CEFR scale goes A1 (beginner) to C2 (mastery). Move the classes to update your level:
+             "done" = finished, "now-level" = where you are, "goal" = where you're headed. -->
+        <div class="levels" aria-label="French level: CEFR scale">
+          <span class="done">A1</span>
+          <span class="done">A2</span>
+          <span class="now-level">B1</span>
+          <span class="goal">B2</span>
+          <span>C1</span>
+          <span>C2</span>
+        </div>
+        <p class="placeholder" lang="en" style="margin:0 0 24px;font-size:14px">[Update this: currently B1, goal B2]</p>
+
+        <div class="french-grid">
+          <div>
+            <h3 style="margin:0 0 8px;font-size:19px">Ce que je fais</h3>
+            <ul>
+              <li>[Cours de français, lectures, podcasts…]</li>
+              <li>Traduire mes notes de projets en français</li>
+              <li>[Autre habitude]</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="margin:0 0 8px;font-size:19px">Mot de la semaine</h3>
+            <p style="margin:0;font-family:var(--serif);font-size:22px">la puissance</p>
+            <p style="margin:4px 0 0;color:var(--ink-3)" lang="en">power, as in watts and horsepower</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RUNNING ===================== -->
+    <section class="section wrap" id="running" aria-labelledby="run-title">
+      <div class="section-head">
+        <span class="tag">Off the desk</span>
+        <h2 id="run-title">Cross country and track</h2>
+      </div>
+
+      <div class="card athlete">
+        <div>
+          <p>I run cross country and track and field. Training and engineering turn out to need the same thing: showing up when it's boring, measuring honestly, and getting a little better each week.</p>
+          <p>Running is also where some of these projects come from. Runner Thermo started with wondering where the energy of a race actually goes.</p>
+        </div>
+        <!-- LEARN: font-variant-numeric: tabular-nums makes every digit the same width, so times line up. -->
+        <div class="splits" aria-label="Personal records">
+          <div><small>5K XC</small><b>[--:--]</b></div>
+          <div><small>1600 m</small><b>[-:--]</b></div>
+          <div><small>800 m</small><b>[-:--]</b></div>
+          <div><small>This week</small><b>[-- mi]</b></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Jared Bridgewater · Written between practices</span>
+      <span><a href="https://github.com/GubbGub">GitHub</a></span>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       LEARN: JAVASCRIPT. The only script on the page: the French toggle.
+       1. Find every button with the class "lang-toggle".
+       2. When one is clicked, find the block named in its data-target.
+       3. Show the French paragraph and hide the English one (or the reverse).
+       The page still works without JavaScript; it just stays in English.
+       ================================================================ -->
+  <script>
+    document.querySelectorAll(".lang-toggle").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var block = document.getElementById(button.dataset.target);
+        var showingFrench = button.getAttribute("aria-pressed") === "true";
+
+        block.querySelector('[data-lang="en"]').hidden = !showingFrench;
+        block.querySelector('[data-lang="fr"]').hidden = showingFrench;
+
+        button.setAttribute("aria-pressed", String(!showingFrench));
+        button.textContent = showingFrench ? "Lire en français" : "Read in English";
+      });
+    });
+  </script>
+</body>
+</html>
