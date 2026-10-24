@@ -33,7 +33,7 @@ window.MONTHLY = [
       scientific: "Macaca fuscata",
       status: "Least Concern on the IUCN Red List",
       // Replace with your own drawing or pixel art, e.g. image: "images/macaque.png"
-      image: null,
+      image: "images/macaque.png",
       imageAlt: "Drawing of a Japanese macaque",
 
       biology: [

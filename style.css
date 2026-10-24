@@ -571,3 +571,5 @@ footer a { color: var(--ink-2); }
   .fn-question { margin: 0 24px; }
   .sources { padding: 0 24px 22px; }
 }
+   /* Pixel art stays crisp instead of blurry when the browser scales it. */
+   .fn-art img { image-rendering: pixelated; }
