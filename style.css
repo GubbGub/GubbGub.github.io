@@ -573,3 +573,8 @@ footer a { color: var(--ink-2); }
 }
    /* Pixel art stays crisp instead of blurry when the browser scales it. */
    .fn-art img { image-rendering: pixelated; }
+
+/* LEARN: on phones the card stacks, so show the art as a full square instead of cropping it to a wide strip. */
+@media (max-width: 860px) {
+  .fn-art img { aspect-ratio: 1 / 1; width: 100%; max-width: 360px; height: auto; margin: 0 auto; display: block; object-fit: contain; }
+}
