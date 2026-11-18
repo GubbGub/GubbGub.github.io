@@ -13,6 +13,7 @@ I built it to learn HTML and CSS properly, so it's deliberately simple: plain HT
 | Section | What it holds |
 |:--|:--|
 | **Projects** | [AP Research on blind-crest intersections](https://github.com/GubbGub/dynamic-fya-crest-controller), [Runner Thermo](https://github.com/GubbGub/runner-thermo-sim), and the [Day Counter](https://github.com/GubbGub/day-counter) |
+| **Deep dives** | Long, data-backed write-ups. First up: [More Than a Tax on Imports](https://gubbgub.github.io/tariffs.html), on tariffs |
 | **This month** | Field Notes on one animal (with its French name) and a Portrait of one under-recognized person. Past months live on the [archive](https://gubbgub.github.io/archive.html) |
 | **Explorations** | Drawing, guitar and pixel art, and the questions they led to |
 | **Reading log** | Notes on books: the core thesis, my takeaways, and where they showed up in my life |
@@ -55,6 +56,10 @@ I built it to learn HTML and CSS properly, so it's deliberately simple: plain HT
 |:--|:--|
 | `index.html` | The homepage |
 | `archive.html` | Every past month of Field Notes and Portraits |
+| `tariffs.html` | The tariffs deep dive |
+| `tariffs-data.js` | The numbers behind its charts |
+| `charts.js` | Draws the charts as SVG and runs the click-to-enlarge viewer |
+| `tools/update_tariff_data.py` | Pulls fresh data from FRED into `tariffs-data.js` |
 | `style.css` | Shared styles for both pages, including light and dark mode |
 | `site.js` | The light/dark and French toggles |
 | `monthly-data.js` | The monthly features, as data |
@@ -84,15 +89,21 @@ I built it to learn HTML and CSS properly, so it's deliberately simple: plain HT
 - [ ] **Fill in the placeholders.** Reading takeaways, project log entries, and running PRs.
 - [ ] **More French.** A *Lire en français* option on more project notes, written myself as practice.
 - [ ] **About and Contact.** A short introduction and a simple way to reach me.
+- [ ] **Pictures in the tariffs deep dive.** Six figure slots are waiting for images and captions.
+- [ ] **A short animated version** of the tariffs deep dive, made in Manim.
 - [ ] **Monthly upkeep.** A new animal, person and French word each month.
 
 **Ideas, not commitments**
 
 - [ ] A small Le Fleur–inspired touch beyond the monthly accent, like a hand-drawn detail
-- [ ] Individual pages for longer project write-ups
+- [x] Individual pages for longer write-ups (the tariffs deep dive)
 - [ ] A custom domain
 
 <br>
+
+## Updating the tariffs data
+
+Run `python3 tools/update_tariff_data.py`. It downloads the latest numbers from FRED and rewrites the chart data; the charts redraw themselves. Numbers quoted in the article text still need a manual check.
 
 ## Adding a new month
 

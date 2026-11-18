@@ -578,3 +578,152 @@ footer a { color: var(--ink-2); }
 @media (max-width: 860px) {
   .fn-art img { aspect-ratio: 1 / 1; width: 100%; max-width: 360px; height: auto; margin: 0 auto; display: block; object-fit: contain; }
 }
+
+/* ================================================================
+   ARTICLE PAGES (long-form deep dives, like tariffs.html)
+   LEARN: body text sits in a narrow column (about 68 characters a line)
+   because long lines are tiring to read. Charts and figures get a wider
+   column so the numbers have room.
+   ================================================================ */
+.article { --measure: 680px; --wide: 880px; }
+.article-head { max-width: var(--measure); margin: 0 auto; padding-top: 72px; }
+.article-head h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(38px, 6.4vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -.02em;
+  margin: 14px 0 16px;
+  text-wrap: balance;
+}
+.article-head .dek { font-family: var(--serif); font-size: clamp(19px, 2.3vw, 23px); color: var(--ink-2); margin: 0 0 22px; }
+.article-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--mono); font-size: 12px; color: var(--ink-3); padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+
+.prose { max-width: var(--measure); margin: 0 auto; font-family: var(--serif); font-size: 19px; line-height: 1.68; }
+.prose h2 {
+  font-family: var(--sans);
+  font-size: clamp(25px, 3.4vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin: 72px 0 6px;
+  text-wrap: balance;
+}
+.prose h2 + .tag { display: block; margin-bottom: 18px; }
+.prose h3 { font-family: var(--sans); font-size: 20px; letter-spacing: -.01em; margin: 40px 0 8px; }
+.prose p { margin: 0 0 18px; }
+.prose ul, .prose ol { margin: 0 0 18px; padding-left: 1.2em; }
+.prose li + li { margin-top: 8px; }
+.prose strong { font-weight: 600; }
+.prose a { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent); text-underline-offset: 3px; }
+
+/* "Huh, why?" callouts and the math boxes */
+.aside, .math-box {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 28px 0;
+  padding: 22px 24px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.aside { border-left: 4px solid var(--accent); }
+.math-box .tag { display: block; margin-bottom: 8px; }
+.math-box h3 { margin: 0 0 10px; font-size: 19px; }
+.math-box p:last-child, .aside p:last-child { margin-bottom: 0; }
+/* LEARN: MathML is HTML's built-in math language. <math display="block"> draws a
+   centered equation with real fractions and exponents, no library needed. */
+.math-box math[display="block"] { margin: 14px 0; font-size: 20px; max-width: 100%; overflow-x: auto; }
+.math-box .worked { font-family: var(--mono); font-size: 14px; background: var(--canvas); border-radius: 8px; padding: 10px 14px; margin: 10px 0 14px; overflow-x: auto; }
+
+/* The short version at the top */
+.tldr { max-width: var(--measure); margin: 36px auto 0; }
+.tldr ol { margin: 10px 0 0; padding-left: 1.2em; font-size: 16px; }
+.tldr li + li { margin-top: 8px; }
+.tldr li b { font-weight: 600; }
+
+/* Figures: charts and pictures. Wider than the text column. */
+.fig {
+  max-width: var(--wide);
+  margin: 36px auto;
+  padding: 22px 24px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.fig-title { font-family: var(--sans); font-weight: 600; font-size: 17px; margin: 0 0 2px; letter-spacing: -.01em; }
+.fig-sub { font-family: var(--sans); font-size: 14px; color: var(--ink-3); margin: 0 0 12px; }
+/* The textbook-style caption under every figure */
+.fig figcaption { font-family: var(--sans); font-size: 14px; line-height: 1.55; color: var(--ink-2); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.fig figcaption b { color: var(--ink); font-weight: 600; }
+.fig figcaption .src { display: block; margin-top: 6px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+.fig .figure { border-radius: 10px; border: 1px solid var(--line); aspect-ratio: 16 / 9; }
+.fig img { border-radius: 10px; width: 100%; height: auto; }
+.fig.portrait-fig { max-width: 520px; }
+.fig.portrait-fig .figure { aspect-ratio: 4 / 5; }
+
+/* Click to enlarge */
+figure.zoom { cursor: zoom-in; transition: border-color .15s; }
+figure.zoom:hover { border-color: var(--ink-3); }
+figure.zoom:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.zoom-hint { float: right; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+
+.lightbox {
+  width: min(1200px, 96vw);
+  max-height: 94vh;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+}
+.lightbox::backdrop { background: rgba(0, 0, 0, .72); }
+.lightbox-stage { padding: 28px 32px 24px; }
+.lightbox-stage .fig { max-width: none; margin: 0; border: none; box-shadow: none; padding: 0; }
+.lightbox-stage .zoom-hint { display: none; }
+.lightbox-close {
+  position: sticky; top: 10px; float: right; margin: 10px 10px 0 0;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink-2);
+  font-size: 20px; line-height: 1; cursor: pointer;
+}
+
+/* Chart colors. LEARN: classes instead of fixed colors, so dark mode just works. */
+.chart-svg { width: 100%; height: auto; display: block; font-family: var(--sans); font-size: 14px; overflow: visible; }
+.ch-grid { stroke: var(--line); }
+.ch-axis-line { stroke: var(--ink-3); }
+.ch-axis { fill: var(--ink-3); font-size: 13px; }
+.ch-label { fill: var(--ink); }
+.ch-bold { font-weight: 600; }
+.ch-small { font-size: 13px; }
+.ch-note { fill: var(--ink-2); font-size: 13px; }
+.ch-ref { stroke: var(--ink-3); stroke-dasharray: 4 4; }
+.ch-ref-strong { stroke-dasharray: 7 5; }
+.ch-line { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linejoin: round; }
+.ch-line-muted { fill: none; stroke: var(--ink-3); stroke-width: 2.6; opacity: .6; }
+.ch-dot { fill: var(--accent); }
+.ch-dot-muted { fill: var(--ink-3); }
+.ch-hollow { fill: var(--surface); stroke: var(--ink-3); stroke-width: 2; }
+.ch-bar { fill: var(--accent); }
+.ch-bar-muted { fill: var(--ink-3); opacity: .35; }
+
+.sources-list { font-family: var(--sans); font-size: 14px; line-height: 1.55; }
+.sources-list li + li { margin-top: 6px; }
+.notice { font-family: var(--sans); font-size: 14px; color: var(--ink-3); }
+
+@media (max-width: 760px) {
+  .prose { font-size: 18px; }
+  .math-box { padding: 18px 16px; }
+  .math-box math[display="block"] { font-size: 17px; }
+  .fig { padding: 16px 14px 14px; margin: 28px -4px; }
+  .lightbox-stage { padding: 20px 14px; }
+  .lightbox { width: 100vw; max-height: 100vh; border-radius: 0; }
+}
+/* LEARN: on a phone, an enlarged chart is drawn wider than the screen so the labels
+   are readable; swipe sideways to see all of it. */
+@media (max-width: 760px) {
+  .lightbox-stage [data-chart] { overflow-x: auto; }
+  .lightbox-stage .chart-svg { min-width: 680px; }
+  .lightbox-stage [data-chart]::before { content: "swipe sideways →"; display: block; font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-bottom: 6px; }
+}

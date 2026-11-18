@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<!--
+  DEEP DIVE: TARIFFS
+  LEARN: a long article is still just HTML. The text lives here; the charts are drawn
+  by charts.js from the numbers in tariffs-data.js; the styles are the ARTICLE PAGES
+  section at the bottom of style.css.
+
+  HOW TO ADD A PICTURE
+  Every picture slot is a <div class="figure"> placeholder. Put the image in images/,
+  then replace the placeholder <div> with:
+    <img src="images/hamilton.jpg" alt="Describe what's in the picture" loading="lazy">
+  and rewrite its [bracketed] caption in your own words.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>More Than a Tax on Imports · Jared Bridgewater</title>
+  <meta name="description" content="A learning-in-public deep dive into tariffs: who pays, where the money goes, inflation, the dollar, and why it's more connected than it looks.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem("theme"); } catch (e) {}
+      var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+    })();
+  </script>
+</head>
+
+<body>
+  <nav class="nav" aria-label="Main">
+    <div class="wrap">
+      <a class="brand" href="index.html">Jared Bridgewater</a>
+      <div class="nav-right">
+        <ul>
+          <li><a href="index.html">Logbook</a></li>
+          <li><a href="index.html#deep-dives">Deep dives</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ul>
+        <button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top" class="article wrap">
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="article-head">
+      <span class="tag">Deep dive · Economics</span>
+      <h1>More Than a Tax on Imports</h1>
+      <p class="dek">Five things I assumed about tariffs, what the data actually says, and why the real story is more connected (and less scary) than it looks.</p>
+      <div class="article-meta">
+        <span>Jared Bridgewater</span>
+        <time datetime="2026-11">November 2026</time>
+        <span>~15 min read</span>
+        <span>Data as of Nov 18, 2026</span>
+      </div>
+    </header>
+
+    <!-- The short version, for people who want the answer first -->
+    <aside class="tldr card" aria-labelledby="tldr-title">
+      <span class="tag" id="tldr-title">The short version</span>
+      <ol>
+        <li><b>"Other countries pay it."</b> Most studies find Americans paid 90%+ of the 2025 tariffs. One careful study finds closer to half.</li>
+        <li><b>"More tax, more money."</b> Revenue really did jump, to about 4× its 2024 pace, but tariffs shrink the thing they tax.</li>
+        <li><b>"It'll cool inflation."</b> It added roughly 0.8 points to core inflation, as a one-time step rather than a ramp.</li>
+        <li><b>"It'll strengthen the dollar."</b> The dollar fell instead, because currencies run on confidence more than trade.</li>
+        <li><b>"It's all arbitrary."</b> It's a 235-year-old debate running through laws, courts, and deadlines.</li>
+      </ol>
+    </aside>
+
+    <!-- ===================== OPENING ===================== -->
+    <div class="prose">
+      <h2 id="why">Why I'm writing this</h2>
+      <p>I'm a high school senior, not an economist. Almost everything here I learned over a few weeks from textbooks, Federal Reserve research notes, budget reports, and a lot of rabbit holes. So read this as a learning log: what I expected, what the data actually said, and where I'm still confused.</p>
+      <p>It's also not an argument for or against any politician or party. Smart, well-credentialed people disagree about tariffs, and I'm not in a position to crown a winner. What I <em>can</em> do is try to explain how the machine works. Once you can see the gears, the news looks a lot less random, and honestly a lot less scary.</p>
+      <p>The plan: five intuitions about tariffs that I had (and I think most people have). For each one, what seems obvious, what the evidence says, and why the real answer is more interesting than either.</p>
+      <p><strong>First, what's a tariff?</strong> It's a tax on imported goods, paid at the border to U.S. Customs by the company bringing the goods in (the "importer of record"). Hold on to that last detail. It matters more than it looks.</p>
+      <p class="notice">Sections marked <span class="tag">The math</span> work through the numbers. You can skip them and still follow the story, but they're where each claim gets checked. Click any chart or picture to enlarge it.</p>
+    </div>
+
+    <figure class="fig zoom">
+      <!-- Swap for: <img src="images/port.jpg" alt="Stacked shipping containers at a U.S. port" loading="lazy"> -->
+      <div class="figure" role="img" aria-label="Placeholder for a photo of a container port">image: images/port.jpg</div>
+      <figcaption><b>Figure 1.</b> [A container port. Caption idea: roughly how many containers a big port handles a year, and the fact that every one of them clears customs, where tariffs are actually paid.]</figcaption>
+    </figure>
+
+    <!-- ===================== INTUITION 1 ===================== -->
+    <div class="prose">
+      <h2 id="who-pays">1. "Other countries pay the tariff"</h2>
+      <span class="tag">Who pays</span>
+      <p><strong>What seems obvious:</strong> it's a tax on <em>their</em> stuff, so <em>they</em> pay it.</p>
+      <p><strong>What actually happens:</strong> the check is written by an American company to the American government. But economists care about a different question, called <em>tariff incidence</em>: who ends up poorer because of the tax? There are three possible answers, and usually it's a mix:</p>
+      <ol>
+        <li><strong>The foreign exporter</strong> lowers its price to stay competitive.</li>
+        <li><strong>The U.S. importer</strong> eats the cost out of its profit margin.</li>
+        <li><strong>The U.S. consumer</strong> pays a higher price at the store.</li>
+      </ol>
+      <p>Here's the cleanest way I've found to see it. A company imports a $100 part, and there's a 25% tariff. If the exporter keeps charging $100, the importer pays $125, and the cost lands on Americans. If the exporter drops its price to $80, the importer pays $80 + $20 tariff = $100, the same as before. In that case the foreign company effectively paid the whole tariff.</p>
+      <p>So which happened in 2025? Researchers can measure this by comparing prices across millions of shipments, and they don't fully agree:</p>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">tap to enlarge</span>
+      <p class="fig-title">Most studies: Americans paid 90%+ of the 2025 tariffs</p>
+      <p class="fig-sub">Share of the tariff cost borne in the U.S. (blue) vs. absorbed by foreign exporters (grey)</p>
+      <div data-chart="who-paid"></div>
+      <figcaption><b>Figure 2. Three ways of measuring the same thing.</b> Each study compares what foreign exporters charged before and after the tariffs. If their prices didn't fall, Americans paid. The New York Fed and Kiel found almost no price cuts. Freund weighted products by how much the U.S. imported <em>before</em> the trade war and found exporters absorbed nearly half. The dashed line marks an even split.
+        <span class="src">Sources: Federal Reserve Bank of New York (Feb 2026); Kiel Institute (Jan 2026); Caroline Freund via Tax Foundation (2026)</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>That disagreement is worth slowing down on, because it's what real research looks like. Most studies say Americans paid most of it. At least one careful study says it was closer to a split. And the share isn't fixed: the New York Fed found foreign exporters paid a growing share as 2025 went on, even though Americans still paid most of it.</p>
+
+      <div class="math-box">
+        <span class="tag">The math</span>
+        <h3>Whoever can walk away pays less</h3>
+        <p>Let <i>ε<sub>d</sub></i> be the buyers' demand elasticity (how much they cut purchases when the price rises 1%) and <i>ε<sub>s</sub></i> the sellers' supply elasticity (how easily sellers can send their goods somewhere else). Then:</p>
+        <math display="block">
+          <mrow><mtext>buyers' share</mtext><mo>=</mo>
+            <mfrac><msub><mi>ε</mi><mi>s</mi></msub><mrow><msub><mi>ε</mi><mi>s</mi></msub><mo>+</mo><msub><mi>ε</mi><mi>d</mi></msub></mrow></mfrac>
+          </mrow>
+        </math>
+        <math display="block">
+          <mrow><mtext>sellers' share</mtext><mo>=</mo>
+            <mfrac><msub><mi>ε</mi><mi>d</mi></msub><mrow><msub><mi>ε</mi><mi>s</mi></msub><mo>+</mo><msub><mi>ε</mi><mi>d</mi></msub></mrow></mfrac>
+          </mrow>
+        </math>
+        <p>In plain English: <strong>whoever has fewer alternatives ends up paying.</strong> Say a U.S. importer can't easily switch suppliers (<i>ε<sub>d</sub></i> = 0.5), but the foreign exporter can easily sell to Europe instead (<i>ε<sub>s</sub></i> = 1.5):</p>
+        <div class="worked">buyers' share = 1.5 / (1.5 + 0.5) = 0.75 → buyers pay 75%</div>
+        <p><strong>Sanity check:</strong> if sellers truly had nowhere else to sell (<i>ε<sub>s</sub></i> = 0), buyers would pay 0 / (0 + <i>ε<sub>d</sub></i>) = 0%, and the exporter would eat the whole tariff. That's exactly the argument that the U.S. market is too big to walk away from. The 2025 data suggest that, at least in the short run, most exporters had more options than American buyers did.</p>
+      </div>
+
+      <div class="aside">
+        <p><strong>Huh, why?</strong> If the U.S. is the world's biggest consumer market, why wouldn't exporters just cut prices to keep selling here? Part of the answer seems to be time. In the short run, an importer can't swap suppliers overnight, and an exporter can sometimes sell its goods somewhere else. Over longer periods, those options change, which is one reason the split can shift.</p>
+      </div>
+    </div>
+
+    <!-- ===================== INTUITION 2 ===================== -->
+    <div class="prose">
+      <h2 id="revenue">2. "If we tax imports more, the government gets more money"</h2>
+      <span class="tag">Revenue</span>
+      <p><strong>What seems obvious:</strong> higher tax rate × lots of imports = lots of revenue.</p>
+      <p><strong>The part that's true:</strong> revenue really did jump. Customs revenue went from $84 billion in fiscal year 2024 to $202 billion in fiscal year 2025. For the 2025 calendar year, the budget deficit came in at $1.67 trillion, the smallest in three years, and the record customs haul was a big reason.</p>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">tap to enlarge</span>
+      <p class="fig-title">Customs revenue ran at about 4× its 2024 pace by late 2025</p>
+      <p class="fig-sub">Federal customs duties, billions of dollars at a seasonally adjusted annual rate, quarterly</p>
+      <div data-chart="customs"></div>
+      <figcaption><b>Figure 3. The money really did show up, then started shrinking.</b> An "annual rate" means "if every quarter were like this one, the year's total would be…", which lets you compare quarters fairly. Revenue climbed from an $89B pace to $367B within a year, then slid as the court ruling removed some tariffs and importers shifted what they bought.
+        <span class="src">Source: Bureau of Economic Analysis via FRED, series B235RC1Q027SBEA</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <div class="math-box">
+        <span class="tag">The math</span>
+        <h3>Running the numbers</h3>
+        <div class="worked">fiscal years:  202 / 84  ≈ 2.4×<br>quarterly pace: 367 / 89 ≈ 4.1×<br>share of budget: 202 / 5,235 ≈ 3.9% of federal revenue (FY2025)</div>
+        <p>For scale: in 1792, customs duties paid for about <strong>95%</strong> of the federal government. Tariffs used to <em>be</em> the federal budget. Today they're a meaningful slice, but they can't replace the income tax.</p>
+      </div>
+
+      <p><strong>The twists:</strong></p>
+      <ul>
+        <li><strong>Tariffs shrink their own base.</strong> When something gets taxed, people buy less of it. Yale's Budget Lab tracks this with two numbers: the tariff rate on what we <em>used</em> to import, and the rate after people shift what they buy. In November 2025 those were 16.8% and 14.4%. The gap is imports that disappeared, and the revenue that went with them.</li>
+        <li><strong>Where the money comes from.</strong> If Americans pay most of the tariff (Intuition 1), then much of this revenue is a tax collected from Americans, just through a different door than April 15.</li>
+        <li><strong>It's not all staying.</strong> After the Supreme Court struck down the tariffs imposed under the emergency-powers law (Intuition 5), about $166 billion became refundable to importers, with interest. Only the importer can claim it. A shopper who paid a higher price can't.</li>
+      </ul>
+
+      <div class="math-box">
+        <span class="tag">The math</span>
+        <h3>Why a bigger tariff can raise less money</h3>
+        <p>Revenue is rate × base. Let <i>t</i> be the tariff rate and <i>M</i>(<i>t</i>) the value of imports at that rate. The catch is that <i>M</i> shrinks as <i>t</i> grows. In a simple model, imports fall off with an elasticity <i>ε</i>:</p>
+        <math display="block">
+          <mrow><mi>R</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mi>t</mi><mo>·</mo><mi>M</mi><mo>(</mo><mi>t</mi><mo>)</mo>
+</mrow>
+        </math>
+        <math display="block">
+          <mrow><mi>M</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><msub><mi>M</mi><mn>0</mn></msub><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>t</mi><mo>)</mo></mrow><mrow><mo>−</mo><mi>ε</mi></mrow></msup></mrow>
+        </math>
+        <p>To find the tariff that raises the most money, take the derivative and set it to zero:</p>
+        <math display="block">
+          <mrow><mfrac><mrow><mi>d</mi><mi>R</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo>
+            <msub><mi>M</mi><mn>0</mn></msub><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>t</mi><mo>)</mo></mrow><mrow><mo>−</mo><mi>ε</mi></mrow></msup>
+            <mrow><mo>[</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mi>ε</mi><mi>t</mi></mrow><mrow><mn>1</mn><mo>+</mo><mi>t</mi></mrow></mfrac><mo>]</mo></mrow>
+            <mo>=</mo><mn>0</mn></mrow>
+        </math>
+        <math display="block">
+          <mrow><mo>⟹</mo><mspace width="0.4em"/>
+            <msup><mi>t</mi><mo>*</mo></msup><mo>=</mo><mfrac><mn>1</mn><mrow><mi>ε</mi><mo>−</mo><mn>1</mn></mrow></mfrac></mrow>
+        </math>
+        <div class="worked">ε = 2 → revenue peaks at a 100% tariff<br>ε = 3 → revenue peaks at a 50% tariff</div>
+        <p>Past that point, raising the rate <em>lowers</em> revenue, because the base shrinks faster than the rate grows. It's the same shape as the Laffer curve. Real elasticities differ by product, so this is a toy model, not a forecast. But it shows why "more tax = more money" is only true up to a point.</p>
+      </div>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">tap to enlarge</span>
+      <p class="fig-title">Toy model: past a point, higher tariffs raise less money</p>
+      <p class="fig-sub">Revenue = t × imports, with imports = 100 × (1 + t)<sup>−ε</sup>. Illustrative, not a forecast.</p>
+      <div data-chart="revenue-model"></div>
+      <figcaption><b>Figure 4. Two forces pulling in opposite directions.</b> At low rates, raising the tariff adds revenue almost one-for-one. As the rate climbs, imports shrink faster, and eventually each extra point of tariff loses more base than it gains in rate. The more sensitive buyers are (bigger ε), the sooner that happens.
+        <span class="src">Computed from the model in the text; elasticities are illustrative</span></figcaption>
+    </figure>
+
+    <!-- ===================== INTUITION 3 ===================== -->
+    <div class="prose">
+      <h2 id="inflation">3. "Tariffs should help inflation, since we'll spend less"</h2>
+      <span class="tag">Inflation</span>
+      <p><strong>What seems obvious:</strong> if imports cost more, people buy less, less spending cools the economy, and prices calm down.</p>
+      <p><strong>What happened:</strong> this one tripped me up. Inflation is the <em>rate at which prices rise</em>. A tariff directly raises the price of the taxed good, and of anything built from imported parts (a U.S.-made washing machine with imported steel inside, for example). So at least at first, it pushes measured inflation <em>up</em>.</p>
+      <p>The Fed's economists have measured how much:</p>
+      <ul>
+        <li>A Federal Reserve note estimated that tariffs put in place through November 2025 raised core goods prices by 3.1% through February 2026, enough to explain all of the "excess" goods inflation compared with before the pandemic.</li>
+        <li>The Dallas Fed estimated tariffs added about 0.8 percentage points to core inflation as of March 2026. Without them, core inflation would have been around 2.3%, close to the Fed's 2% target.</li>
+        <li>The Boston Fed came in lower. Productivity gains partly offset the tariffs, for a net effect of about 0.5 points.</li>
+      </ul>
+
+      <div class="math-box">
+        <span class="tag">The math</span>
+        <h3>A step, not a ramp</h3>
+        <p>Call the price level <i>P</i> and normal inflation <i>π</i>. Each year, <i>P</i> gets multiplied by (1 + <i>π</i>). A tariff adds a one-time bump <i>s</i>:</p>
+        <math display="block">
+          <mrow><msub><mi>P</mi><mn>1</mn></msub><mo>=</mo><msub><mi>P</mi><mn>0</mn></msub><mo>(</mo><mn>1</mn><mo>+</mo><mi>π</mi><mo>)</mo><mo>(</mo><mn>1</mn><mo>+</mo><mi>s</mi><mo>)</mo>
+</mrow>
+        </math>
+        <math display="block">
+          <mrow><msub><mi>P</mi><mn>2</mn></msub><mo>=</mo><msub><mi>P</mi><mn>1</mn></msub><mo>(</mo><mn>1</mn><mo>+</mo><mi>π</mi><mo>)</mo></mrow>
+        </math>
+        <p>So in year 1, measured inflation ≈ <i>π</i> + <i>s</i>. In year 2 it goes back to <i>π</i>. Plug in the Dallas Fed's numbers:</p>
+        <div class="worked">π ≈ 2.3% underlying + s ≈ 0.8 points from tariffs → measured ≈ 3.1%<br>actual, from the core PCE price index: 129.030 / 125.144 − 1 = 3.1%  ✓</div>
+        <p>The catch: prices don't come back down. In year 2, inflation returns to normal, but everything stays about 0.8% more expensive than it otherwise would have been. A step is permanent. It just stops climbing.</p>
+      </div>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">tap to enlarge</span>
+      <p class="fig-title">Core inflation: 3.1% actual vs. ~2.3% without tariffs (Mar 2026)</p>
+      <p class="fig-sub">Core PCE prices, % change from a year earlier, monthly</p>
+      <div data-chart="core-pce"></div>
+      <figcaption><b>Figure 5. The step shows up late.</b> "Core" inflation leaves out food and energy, whose prices jump around, so it shows the underlying trend. It barely moved in 2025 and only climbed toward 3.1% in 2026, almost a year after the big tariffs, consistent with research finding that full pass-through to store prices took about seven months. The hollow circle is the Dallas Fed's estimate of where inflation would have been without tariffs.
+        <span class="src">Source: BEA core PCE price index via FRED (PCEPILFE), year-over-year change computed by me; Dallas Fed (May 2026)</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>So the intuition isn't completely crazy. Higher prices can reduce what people can afford, which does cool demand a little. That's one reason the Fed treats tariff price bumps carefully instead of slamming on the brakes. But "tariffs lower inflation" isn't what the data shows.</p>
+    </div>
+
+    <!-- ===================== INTUITION 4 ===================== -->
+    <div class="prose">
+      <h2 id="dollar">4. "Tariffs make the dollar stronger"</h2>
+      <span class="tag">The dollar</span>
+      <p><strong>What the textbook says:</strong> if Americans buy fewer imports, they need fewer euros, yen, and yuan, so they sell fewer dollars. Less selling means a stronger dollar. Some models predict the dollar rises enough to cancel out part of the tariff.</p>
+      <p><strong>What happened:</strong> the opposite. The U.S. dollar index fell 10.8% in the first half of 2025, its worst first half since 1973, the year currencies started floating freely.</p>
+
+      <div class="math-box">
+        <span class="tag">The math</span>
+        <h3>What the textbook expected vs. what happened</h3>
+        <p>The dollar price of an imported good is the foreign price <i>p</i>*, times the exchange rate <i>e</i> (dollars per unit of foreign currency), times one plus the tariff:</p>
+        <math display="block">
+          <mrow><msub><mi>p</mi><mtext>$</mtext></msub><mo>=</mo><msup><mi>p</mi><mo>*</mo></msup><mo>·</mo><mi>e</mi><mo>·</mo><mo>(</mo><mn>1</mn><mo>+</mo><mi>t</mi><mo>)</mo></mrow>
+        </math>
+        <p><strong>Textbook case:</strong> a 10% tariff, and the dollar strengthens 10%, so each euro costs 1/1.10 as many dollars:</p>
+        <div class="worked">(1 / 1.10) × 1.10 = 1.00 → no change at all. The currency cancels the tariff.</div>
+        <p><strong>What actually happened (illustration):</strong> the euro rose 13.8% against the dollar in the first half of 2025. A €100 good facing a 10% tariff:</p>
+        <div class="worked">1.138 × 1.10 = 1.252 → about 25% more in dollars</div>
+        <p>The currency move <em>stacked on top of</em> the tariff instead of canceling it. (10% is just an example rate; actual rates on EU goods changed during the year.)</p>
+      </div>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">tap to enlarge</span>
+      <p class="fig-title">The dollar fell ~7% in early 2025 instead of rising</p>
+      <p class="fig-sub">Fed broad trade-weighted dollar index (Jan 2006 = 100), monthly average. Textbook prediction: up.</p>
+      <div data-chart="dollar"></div>
+      <figcaption><b>Figure 6. Which index you pick changes the headline.</b> The famous "−10.8%" is the DXY index, which is mostly the euro. This is the Fed's broader index, weighted across the currencies of all major trading partners, including China and Mexico. It fell less, about 6.8% from January to July 2025, but in the same direction. Always ask how a number was measured.
+        <span class="src">Source: Federal Reserve broad dollar index via FRED (DTWEXBGS)</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <div class="aside">
+        <p><strong>Huh, why?</strong> This was my favorite moment of the whole project. The textbook model isn't wrong, but it only covers trade flows, and <strong>trade is a small part of what moves a currency</strong>. Every day, investors and central banks decide where to keep trillions of dollars of savings, and exchange rates move with their <em>confidence</em>: in growth, policy, debt, and institutions. Analysts at S&amp;P Global pointed to tariffs, worries about the Fed's independence, rising U.S. debt, and inflation fears all together.</p>
+      </div>
+      <p>To keep this in proportion: even after the drop, S&amp;P noted the dollar was still more than 15% above its long-run average in real terms. And a weaker dollar isn't automatically bad news. It makes American exports cheaper for the rest of the world, which is part of what tariff supporters wanted in the first place.</p>
+      <p>The bigger lesson: <strong>a currency is closer to a vote of confidence than a scoreboard of trade.</strong> That idea sets up the deepest part of this story.</p>
+    </div>
+
+    <!-- ===================== INTUITION 5 ===================== -->
+    <div class="prose">
+      <h2 id="arbitrary">5. "This is all arbitrary"</h2>
+      <span class="tag">History, ideas, and law</span>
+      <p>It can feel that way watching the news: rates announced, paused, raised, struck down. But the more I dug, the more it looked like a very old argument, now running through a very rule-bound system.</p>
+
+      <h3>1791: Hamilton's blueprint</h3>
+      <p>The tariff debate is as old as the country. The first major tariff, in 1789, was about 5% on most goods and 7.5–10% on some luxury and manufactured items. In 1791, Treasury Secretary Alexander Hamilton sent Congress his <em>Report on Manufactures</em>, a plan for turning a farming nation into an industrial one.</p>
+    </div>
+
+    <figure class="fig portrait-fig zoom">
+      <!-- Swap for: <img src="images/hamilton.jpg" alt="Portrait of Alexander Hamilton by John Trumbull, 1806" loading="lazy"> -->
+      <div class="figure" role="img" aria-label="Placeholder for Alexander Hamilton's portrait">image: images/hamilton.jpg</div>
+      <figcaption><b>Figure 7. Alexander Hamilton.</b> [Your caption: who painted it and when, and your detail about the coat. Check the color against the museum's own description before you write it.]
+        <span class="src">[Source: e.g. Wikimedia Commons, public domain]</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Hamilton supported moderate tariffs, but his favorite tool was <strong>bounties</strong>, direct subsidies to new industries. In his own words: "Bounties have not like high protecting duties, a tendency to produce scarcity." A subsidy helps the factory without raising prices on shoppers. The irony is that Congress adopted nearly all of Hamilton's tariff proposals in 1792 and rejected the bounties.</p>
+
+      <h3>Today: the case for tariffs, at its strongest</h3>
+      <p>Peter Navarro, the president's trade adviser, often cites Hamilton. The best version of his argument, as I understand it:</p>
+      <ul>
+        <li><strong>The playing field isn't level.</strong> Free-trade theory assumes fair competition. If a foreign government subsidizes its factories to undercut yours, a small tariff won't protect an industry you need in a war.</li>
+        <li><strong>Supply chains are national security.</strong> Assembling something in America out of foreign steel and foreign chips doesn't make you resilient.</li>
+        <li><strong>Tariffs are leverage.</strong> The threat of losing access to the American market can pull other countries to the negotiating table.</li>
+      </ul>
+      <p>You don't have to agree with the tools to see that these concerns are real, and that they're about security and resilience, not just money.</p>
+    </div>
+
+    <figure class="fig portrait-fig zoom">
+      <!-- Swap for: <img src="images/navarro.jpg" alt="Official portrait of Peter Navarro" loading="lazy"> -->
+      <div class="figure" role="img" aria-label="Placeholder for Peter Navarro's portrait">image: images/navarro.jpg</div>
+      <figcaption><b>Figure 8. Peter Navarro.</b> [Your caption: his role, and the idea he's best known for.]
+        <span class="src">[Source: e.g. official White House portrait, public domain]</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <h3>The puzzle underneath: Triffin's dilemma</h3>
+      <p>In 1960, economist Robert Triffin warned Congress about a trap. The dollar had become the world's reserve currency, backed by gold. To supply the world with dollars, the U.S. had to send more of them abroad than it brought home, until there were more dollars overseas than gold to back them. In 1971 that's exactly what happened: President Nixon ended the dollar's convertibility to gold.</p>
+    </div>
+
+    <figure class="fig zoom">
+      <!-- Swap for: <img src="images/nixon-1971.jpg" alt="President Nixon's televised address of August 15, 1971" loading="lazy"> -->
+      <div class="figure" role="img" aria-label="Placeholder for an image of Nixon's August 1971 address">image: images/nixon-1971.jpg</div>
+      <figcaption><b>Figure 9. August 15, 1971.</b> [Your caption: the "Nixon shock," and how it made Triffin's warning come true.]
+        <span class="src">[Source]</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Stephen Miran, who has advised the administration, argues a modern version of Triffin still applies. In this view, global demand for dollars keeps the currency overvalued, which makes American exports expensive and wears down manufacturing. If that's right, trade deficits are partly a side effect of the dollar's global role, not just a sign of bad trade deals.</p>
+      <p>But plenty of economists push back hard:</p>
+      <ul>
+        <li>Michael Bordo and Robert McCauley argue that foreign central banks no longer drive U.S. deficits, so we're not really in "Triffin land" anymore.</li>
+        <li>Others point out that during Bretton Woods, when you'd expect this effect to be strongest, the U.S. never ran a significant current account deficit.</li>
+        <li>Dollars can flow abroad through investment instead of trade. And some argue the real issue is persistent government budget deficits, not the reserve role itself.</li>
+      </ul>
+      <p>I can't settle that debate, and it seems nobody has yet. But it's the clearest example of what I mean by <em>global implications</em>. A tax on imported steel connects to the price of U.S. government debt, the world's demand for dollars, and how 1971 played out.</p>
+
+      <h3>The rules are working</h3>
+      <p>The last thing that made this feel less arbitrary to me: the system has checks, and they visibly worked.</p>
+      <ul>
+        <li>The Constitution gives Congress the power to tax, including tariffs. Presidents set tariffs under laws Congress has passed.</li>
+        <li>On February 20, 2026, the Supreme Court ruled 6–3 that the emergency-powers law (IEEPA) doesn't authorize tariffs at all.</li>
+        <li>The administration switched to a different law, Section 122 of the Trade Act of 1974, for a temporary global tariff. That law caps such a tariff at 150 days, so it expired on July 24, 2026.</li>
+        <li>The same day, new tariffs of 10–12.5% on 60 economies took effect under Section 301, a law with its own procedures and its own legal challenges.</li>
+      </ul>
+    </div>
+
+    <figure class="fig zoom">
+      <!-- Swap for: <img src="images/supreme-court.jpg" alt="The U.S. Supreme Court building" loading="lazy"> -->
+      <div class="figure" role="img" aria-label="Placeholder for a photo of the Supreme Court building">image: images/supreme-court.jpg</div>
+      <figcaption><b>Figure 10. The U.S. Supreme Court.</b> [Your caption: the case name (<i>Learning Resources v. Trump</i>), the 6–3 vote, and what "IEEPA doesn't authorize tariffs" means in one sentence.]
+        <span class="src">[Source]</span></figcaption>
+    </figure>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">tap to enlarge</span>
+      <p class="fig-title">Average U.S. tariff rate: ~3% → 18% → about 11% today</p>
+      <p class="fig-sub">Yale Budget Lab average effective / statutory tariff rate, %</p>
+      <div data-chart="tariff-rate"></div>
+      <figcaption><b>Figure 11. The whole story in one number.</b> An "average effective tariff rate" is total tariffs divided by total imports, so one number can summarize thousands of product-by-country rates. Even after the court ruling, today's rate is about 11.0 / 2.7 ≈ 4× the 2022–24 level, the highest since the 1940s apart from 2025.
+        <span class="src">Source: Yale Budget Lab, State of U.S. Tariffs reports (Jul 2025–Aug 2026). *The 2022–24 figure is based on duties actually collected, a slightly different measure.</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>You can think that's good policy or bad policy. Either way, it isn't chaos. It's laws, courts, deadlines, and refunds, all on the public record.</p>
+
+      <!-- ===================== FACTORIES ===================== -->
+      <h2 id="factories">So did the factories come back?</h2>
+      <span class="tag">The scoreboard</span>
+      <p>This is the question everything else is in service of, and the honest answer is: <strong>mixed, and too early to call.</strong></p>
+      <ul>
+        <li>Factory jobs were already falling <em>before</em> the tariffs: from January 2024 to January 2025, the U.S. lost about <strong>202,000</strong> manufacturing jobs.</li>
+        <li>From April 2025 to February 2026, it lost about <strong>79,000</strong> more.</li>
+        <li>After bottoming at 12.58 million in December 2025, factories added about <strong>58,000</strong> jobs through August 2026.</li>
+        <li>Net change from January 2025 to August 2026: about <strong>−35,000</strong>.</li>
+      </ul>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">tap to enlarge</span>
+      <p class="fig-title">Factory jobs fell before and after the tariffs, then regained 58,000</p>
+      <p class="fig-sub">U.S. manufacturing employment, millions, seasonally adjusted, monthly (latest revised data)</p>
+      <div data-chart="manemp"></div>
+      <figcaption><b>Figure 12. A trend that started before the tariffs.</b> "Seasonally adjusted" means predictable swings, like summer shutdowns, are smoothed out so real changes stand out. The decline began in early 2024, kept going through 2025, and turned around in 2026. The line alone can't tell you <em>why</em>; that takes more careful research.
+        <span class="src">Source: Bureau of Labor Statistics via FRED (MANEMP)</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>What's causing what is disputed. Some economists say factory jobs follow overall demand and the economy, not tariffs. Supporters point to gains in metals and transportation manufacturing. And there's a deeper pattern underneath: by mid-2026, factory output was growing even while payrolls weren't. Modern factories can make more with fewer people. That means "bringing manufacturing back" and "bringing manufacturing <em>jobs</em> back" might not be the same goal, which is a whole other article.</p>
+      <p>Building a factory takes years, not months. If tariffs or the 2025 tax incentives for domestic investment work, a lot of the evidence won't show up until 2027 or later.</p>
+
+      <div class="aside">
+        <p><strong>A lesson about data: numbers get revised.</strong> When I first researched this, news articles said factories had lost 89,000 jobs since April 2025 and were 62,000 below January 2025. The current Bureau of Labor Statistics data show smaller losses (79,000 and 35,000). Nobody lied. The BLS revises its estimates as better survey data come in, especially in its yearly benchmark revision. Always use the latest data, and say when you pulled it.</p>
+      </div>
+
+      <!-- ===================== HOPEFUL ===================== -->
+      <h2 id="hopeful">Why I'm hopeful anyway</h2>
+      <p>Not because any of this is perfect. I'm hopeful because of what I found while trying to understand it.</p>
+      <p><strong>The economy is legible.</strong> Within months of the 2025 tariffs, researchers had gone through tens of millions of shipment records and estimated who paid. Within a year, the Fed could estimate what tariffs did to inflation, almost to the decimal. We're not flying blind, and anyone with an internet connection can pull up the same data I used for every chart on this page.</p>
+      <p><strong>The disagreements are about tools, not goals.</strong> Hamilton, Navarro, and the economists who criticize them all want a strong, secure country that makes things. They disagree about whether tariffs, subsidies, or something else gets you there. That's a debate you can actually have with evidence.</p>
+      <p><strong>Price shocks fade.</strong> A tariff mostly raises prices once. It doesn't lock in permanent inflation, and the Fed knows that.</p>
+      <p><strong>The rules held.</strong> Courts ruled, laws had deadlines, deadlines were met, and money went back to the people who were owed it. Whatever you think of the outcome, the process worked the way it's supposed to.</p>
+      <p><strong>Understanding replaces fear.</strong> "Tariffs" sounded like one simple lever to me. It turns out to be connected to the price of my groceries, the strength of the dollar, a gold crisis in 1971, and a debate from 1791. That's not depressing. It's one of the coolest systems I've ever looked at, and I'm going to keep studying it.</p>
+
+      <!-- ===================== OPEN QUESTIONS ===================== -->
+      <h2 id="open-questions">What I still don't know</h2>
+      <ul>
+        <li>Why didn't foreign exporters cut prices more? I understand the theory but not the industry details.</li>
+        <li>Is the modern Triffin argument right? Smart people are split, and I'd need to understand capital flows much better to judge.</li>
+        <li>Will the investment incentives and tariffs show up as new factories by 2028? Nobody knows yet.</li>
+        <li>What happens to tariff policy as the Section 301 cases work through the courts?</li>
+      </ul>
+      <p><strong>What I'm reading next:</strong> Douglas Irwin's <em>Clashing over Commerce</em>, the standard history of U.S. trade policy, and Hamilton's actual <em>Report on Manufactures</em>, which is free on <a href="https://founders.archives.gov/">Founders Online</a>.</p>
+
+      <!-- ===================== SOURCES ===================== -->
+      <h2 id="sources">Sources</h2>
+      <p class="notice">Chart data pulled from FRED (Federal Reserve Bank of St. Louis) on November 18, 2026.</p>
+      <ul class="sources-list">
+        <li>Federal Reserve, <a href="https://www.federalreserve.gov/econres/notes/feds-notes/detecting-tariff-effects-on-consumer-prices-in-real-time-part-ii-20260408.html">Detecting Tariff Effects on Consumer Prices in Real Time, Part II</a> (Apr 2026)</li>
+        <li>Dallas Fed, <a href="https://www.dallasfed.org/research/economics/2026/0505-mau">Effects of realized tariff changes on PCE prices</a> (May 2026)</li>
+        <li>Boston Fed, <a href="https://www.bostonfed.org/-/media/Documents/Workingpapers/PDF/2026/CPP2607.pdf">tariffs, productivity, and core inflation</a> (2026)</li>
+        <li>PIIE, <a href="https://www.piie.com/blogs/realtime-economics/2026/who-pays-tariffs-insights-recent-research">Who pays for tariffs? Insights from recent research</a> (2026)</li>
+        <li>Tax Foundation, <a href="https://taxfoundation.org/blog/exporters-bore-higher-share-2025-tariffs-than-previously-estimated/">on Caroline Freund's estimate</a> (2026)</li>
+        <li>Yale Budget Lab, <a href="https://budgetlab.yale.edu/topic/trade">State of U.S. Tariffs reports and open data</a></li>
+        <li>Bloomberg, <a href="https://www.bloomberg.com/news/articles/2025-06-30/dollar-index-slumps-10-8-in-biggest-first-half-loss-since-1973-mcjmj1mo">Dollar index's biggest first-half loss since 1973</a> (Jun 2025)</li>
+        <li>S&amp;P Global, <a href="https://www.spglobal.com/market-intelligence/en/news-insights/articles/2025/7/us-dollar-shows-few-signs-of-rallying-after-worst-6month-stretch-in-decades-91359418">The dollar after its worst six months in decades</a> (Jul 2025)</li>
+        <li>Douglas Irwin, <a href="https://www.nber.org/papers/w9943">The Aftermath of Hamilton's "Report on Manufactures"</a> (NBER)</li>
+        <li>VoxEU, <a href="https://cepr.org/voxeu/columns/not-triffin-not-miran-rethinking-us-external-imbalances-new-monetary-order">Not Triffin, not Miran</a></li>
+        <li>Council on Foreign Relations, <a href="https://www.cfr.org/articles/after-the-supreme-court-ruling-what-is-next-for-trumps-tariffs">After the Supreme Court ruling</a> (Feb 2026)</li>
+        <li>American Bar Association, <a href="https://www.americanbar.org/groups/public_contract_law/resources/procurement-lawyer/2026-fall/ieepa-tariffs-struck-down-replacement-tariffs-expired/">IEEPA tariffs struck down, replacement tariffs expired</a> (Fall 2026)</li>
+        <li>FRED series: <a href="https://fred.stlouisfed.org/series/MANEMP">MANEMP</a>, <a href="https://fred.stlouisfed.org/series/DTWEXBGS">DTWEXBGS</a>, <a href="https://fred.stlouisfed.org/series/PCEPILFE">PCEPILFE</a>, <a href="https://fred.stlouisfed.org/series/B235RC1Q027SBEA">B235RC1Q027SBEA</a></li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- The click-to-enlarge viewer. Empty until a figure is clicked. -->
+  <dialog class="lightbox" id="lightbox" aria-label="Enlarged figure">
+    <button class="lightbox-close" type="button" aria-label="Close">×</button>
+    <div class="lightbox-stage"></div>
+  </dialog>
+
+  <footer>
+    <div class="wrap">
+      <span>Jared Bridgewater · Written between practices</span>
+      <span><a href="index.html">Logbook</a> · <a href="archive.html">Archive</a> · <a href="https://github.com/GubbGub">GitHub</a></span>
+      <p class="rights">Code and writing are free to share with credit. Artwork © 2026 Jared Bridgewater, all rights reserved. <a href="https://github.com/GubbGub/GubbGub.github.io/blob/main/LICENSE.md">License</a></p>
+    </div>
+  </footer>
+
+  <script src="tariffs-data.js"></script>
+  <script src="charts.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>
