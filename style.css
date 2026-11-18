@@ -682,6 +682,9 @@ figure.zoom:focus-visible { outline: 3px solid var(--accent); outline-offset: 3p
 .lightbox-stage { padding: 28px 32px 24px; }
 .lightbox-stage .fig { max-width: none; margin: 0; border: none; box-shadow: none; padding: 0; }
 .lightbox-stage .zoom-hint { display: none; }
+/* LEARN: never stretch a picture past its real size. Extra pixels can't be invented,
+   so an image blown up beyond its resolution just turns blurry. */
+.lightbox-stage img { width: auto; max-width: 100%; max-height: 80vh; margin: 0 auto; }
 .lightbox-close {
   position: sticky; top: 10px; float: right; margin: 10px 10px 0 0;
   width: 34px; height: 34px; border-radius: 50%;

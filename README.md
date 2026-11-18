@@ -89,7 +89,6 @@ I built it to learn HTML and CSS properly, so it's deliberately simple: plain HT
 - [ ] **Fill in the placeholders.** Reading takeaways, project log entries, and running PRs.
 - [ ] **More French.** A *Lire en français* option on more project notes, written myself as practice.
 - [ ] **About and Contact.** A short introduction and a simple way to reach me.
-- [ ] **One more picture in the tariffs deep dive.** The Port of Los Angeles photo still needs a version that is licensed for reuse.
 - [ ] **A short animated version** of the tariffs deep dive, made in Manim.
 - [ ] **Monthly upkeep.** A new animal, person and French word each month.
 

@@ -222,6 +222,8 @@
     copy.classList.remove("zoom");
     copy.removeAttribute("tabindex");
     copy.removeAttribute("role");
+    // LEARN: a picture can name a bigger or fuller version to show when enlarged (data-zoom-src).
+    copy.querySelectorAll("img[data-zoom-src]").forEach(function (img) { img.src = img.dataset.zoomSrc; img.removeAttribute("loading"); });
     stage.appendChild(copy);
     dialog.showModal();
   }
