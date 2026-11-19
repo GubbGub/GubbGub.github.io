@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <!-- LEARN: the ?v=... after the file name is a "cache buster". Browsers save copies of files;
        changing this text after editing style.css makes every visitor download the new version. -->
-  <link rel="stylesheet" href="style.css?v=2026-11-18d">
+  <link rel="stylesheet" href="style.css?v=2026-11-19a">
   <script>
     (function () {
       var saved = null;
@@ -110,6 +110,23 @@
         <li><strong>The U.S. consumer</strong> pays a higher price at the store.</li>
       </ol>
       <p>Here's the cleanest way I've found to see it. A company imports a $100 part, and there's a 25% tariff. If the exporter keeps charging $100, the importer pays $125, and the cost lands on Americans. If the exporter drops its price to $80, the importer pays $80 + $20 tariff = $100, the same as before. In that case the foreign company effectively paid the whole tariff.</p>
+    </div>
+
+    <!-- LEARN: <video controls> gives the built-in play bar. preload="metadata" loads only the length
+         until someone presses play, and the poster is the still shown before that. This figure is not
+         a .zoom figure, so clicking the video plays it instead of opening the enlarged view. -->
+    <figure class="fig">
+      <p class="fig-title">Watch it: who actually pays a tariff?</p>
+      <p class="fig-sub">The $100 example, animated (45 seconds)</p>
+      <video class="fig-video" controls preload="metadata" playsinline poster="videos/who-pays-poster.jpg">
+        <source src="videos/who-pays.mp4" type="video/mp4">
+        Your browser can't play this video. <a href="videos/who-pays.mp4">Download it instead.</a>
+      </video>
+      <figcaption><b>Video 1. The same tariff, three outcomes.</b> If the exporter keeps its price, Americans pay the whole tariff. If it cuts its price to $80, the exporter does. The bars then slide to where each 2025 study lands, drawn from the same math as the next section.
+        <span class="src">Made with Manim. Code: <a href="https://github.com/GubbGub/manim-deep-dives/tree/main/tariffs">GubbGub/manim-deep-dives</a></span></figcaption>
+    </figure>
+
+    <div class="prose">
       <p>So which happened in 2025? Researchers can measure this by comparing prices across millions of shipments, and they don't fully agree:</p>
     </div>
 
@@ -483,8 +500,8 @@
     </div>
   </footer>
 
-  <script src="tariffs-data.js?v=2026-11-18d"></script>
-  <script src="charts.js?v=2026-11-18d"></script>
-  <script src="site.js?v=2026-11-18d"></script>
+  <script src="tariffs-data.js?v=2026-11-19a"></script>
+  <script src="charts.js?v=2026-11-19a"></script>
+  <script src="site.js?v=2026-11-19a"></script>
 </body>
 </html>

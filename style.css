@@ -660,6 +660,7 @@ footer a { color: var(--ink-2); }
 .fig figcaption .src { display: block; margin-top: 6px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
 .fig .figure { border-radius: 10px; border: 1px solid var(--line); aspect-ratio: 16 / 9; }
 .fig img { border-radius: 10px; width: 100%; height: auto; }
+.fig-video { display: block; width: 100%; height: auto; border-radius: 10px; background: var(--canvas); }
 .fig.portrait-fig { max-width: 520px; }
 .fig.portrait-fig .figure { aspect-ratio: 4 / 5; }
 /* Two figures side by side. Both pictures get the same shape (3:4) so the row lines up;
