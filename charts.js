@@ -232,7 +232,12 @@
     fig.setAttribute("tabindex", "0");
     fig.setAttribute("role", "button");
     fig.setAttribute("aria-label", "Enlarge: " + (fig.querySelector("figcaption") || fig).textContent.trim().slice(0, 80));
-    fig.addEventListener("click", function () { open(fig); });
+    fig.addEventListener("click", function (e) {
+      // LEARN: clicks "bubble up" from a link to the figure around it. If the click
+      // was on a link (like a source in the caption), let the link do its job instead.
+      if (e.target.closest("a")) return;
+      open(fig);
+    });
     fig.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(fig); }
     });
