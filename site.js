@@ -45,3 +45,23 @@ document.querySelectorAll(".lang-toggle").forEach(function (button) {
   });
 });
   
+
+/* EXTERNAL LINKS OPEN IN A NEW TAB
+   LEARN: a link's hostname is the website it points to. If it isn't this site,
+   open it in a new tab so the reader doesn't lose their place here.
+   rel="noopener" stops the other site from controlling this tab, and
+   "noreferrer" keeps it from seeing which page sent the visitor.
+   Because this runs on every page, new links get the behavior automatically. */
+document.querySelectorAll("a[href]").forEach(function (link) {
+  if (link.hostname && link.hostname !== location.hostname) {
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    if (!link.querySelector(".new-tab")) {
+      // A hidden note for screen readers, so the new tab isn't a surprise.
+      var note = document.createElement("span");
+      note.className = "new-tab";
+      note.textContent = " (opens in a new tab)";
+      link.appendChild(note);
+    }
+  }
+});

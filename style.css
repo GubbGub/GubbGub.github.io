@@ -737,3 +737,6 @@ figure.zoom:focus-visible { outline: 3px solid var(--accent); outline-offset: 3p
   .lightbox-stage .chart-svg { min-width: 680px; }
   .lightbox-stage [data-chart]::before { content: "swipe sideways →"; display: block; font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-bottom: 6px; }
 }
+
+/* LEARN: visually hidden but still read aloud by screen readers. */
+.new-tab { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
