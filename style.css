@@ -662,6 +662,12 @@ footer a { color: var(--ink-2); }
 .fig img { border-radius: 10px; width: 100%; height: auto; }
 .fig.portrait-fig { max-width: 520px; }
 .fig.portrait-fig .figure { aspect-ratio: 4 / 5; }
+/* Two figures side by side. Both pictures get the same shape (3:4) so the row lines up;
+   object-fit: cover trims a little from the edges instead of squashing the image. */
+.fig-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: var(--wide); margin: 36px auto; }
+.fig-pair .fig { margin: 0; max-width: none; }
+.fig-pair .fig img { aspect-ratio: 3 / 4; object-fit: cover; }
+.lightbox-stage .fig-pair, .lightbox-stage .fig img { aspect-ratio: auto; object-fit: contain; }
 
 /* Click to enlarge */
 figure.zoom { cursor: zoom-in; transition: border-color .15s; }
@@ -720,6 +726,7 @@ figure.zoom:focus-visible { outline: 3px solid var(--accent); outline-offset: 3p
   .math-box { padding: 18px 16px; }
   .math-box math[display="block"] { font-size: 17px; }
   .fig { padding: 16px 14px 14px; margin: 28px -4px; }
+  .fig-pair { grid-template-columns: 1fr; margin: 28px -4px; }
   .lightbox-stage { padding: 20px 14px; }
   .lightbox { width: 100vw; max-height: 100vh; border-radius: 0; }
 }
