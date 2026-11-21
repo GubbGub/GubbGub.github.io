@@ -741,3 +741,8 @@ figure.zoom:focus-visible { outline: 3px solid var(--accent); outline-offset: 3p
 
 /* LEARN: visually hidden but still read aloud by screen readers. */
 .new-tab { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Language switch at the top of an article */
+.article-lang { display: flex; justify-content: flex-end; margin-bottom: 8px; scroll-margin-top: 80px; }
+.article-lang .lang-toggle { scroll-margin-top: 80px; }
+.article h2[id] { scroll-margin-top: 72px; }

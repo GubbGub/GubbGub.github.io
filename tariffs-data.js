@@ -1,4 +1,5 @@
 /* Data for the tariffs article (tariffs.html).
+   Fields ending in "Fr" are the French labels for the "Lire en français" version.
    LEARN: the charts are drawn FROM this file by charts.js. Change a number here
    and the chart redraws itself; nothing is a picture.
 
@@ -58,21 +59,21 @@ window.TARIFF_DATA = {
 
   // Share of the 2025 tariffs borne in the U.S., % (NY Fed Feb 2026; Kiel Jan 2026; Freund 2026)
   whoPaid: [
-    { study: "New York Fed", period: "first 8 months of 2025", us: 94 },
-    { study: "Kiel Institute", period: "2025 shipments", us: 96 },
-    { study: "Caroline Freund", period: "2025, volume-weighted", us: 53 }
+    { study: "New York Fed", studyFr: "Fed de New York", period: "first 8 months of 2025", periodFr: "8 premiers mois de 2025", us: 94 },
+    { study: "Kiel Institute", studyFr: "Institut de Kiel", period: "2025 shipments", periodFr: "envois de 2025", us: 96 },
+    { study: "Caroline Freund", period: "2025, volume-weighted", periodFr: "2025, pondéré par volume", us: 53 }
   ],
 
   // Yale Budget Lab average effective / statutory tariff rate, % (State of U.S. Tariffs reports)
   tariffRate: [
-    { when: "2022–24", note: "average*", v: 2.7 },
-    { when: "Jul 2025", note: "EU deal", v: 18.2 },
-    { when: "Nov 2025", note: "", v: 16.8 },
-    { when: "Jan 2026", note: "", v: 16.9 },
-    { when: "Feb 20, 2026", note: "IEEPA struck", v: 9.1 },
-    { when: "Apr 2026", note: "+ Sec. 122", v: 11.0 },
-    { when: "Jul 24, 2026", note: "Sec. 301", v: 11.1 },
-    { when: "Aug 2026", note: "latest", v: 11.0 }
+    { when: "2022–24", note: "average*", whenFr: "2022-2024", noteFr: "moyenne*", v: 2.7 },
+    { when: "Jul 2025", note: "EU deal", whenFr: "juil. 2025", noteFr: "accord UE", v: 18.2 },
+    { when: "Nov 2025", note: "", whenFr: "nov. 2025", noteFr: "", v: 16.8 },
+    { when: "Jan 2026", note: "", whenFr: "janv. 2026", noteFr: "", v: 16.9 },
+    { when: "Feb 20, 2026", note: "IEEPA struck", whenFr: "20 févr. 2026", noteFr: "IEEPA annulée", v: 9.1 },
+    { when: "Apr 2026", note: "+ Sec. 122", whenFr: "avr. 2026", noteFr: "+ sect. 122", v: 11.0 },
+    { when: "Jul 24, 2026", note: "Sec. 301", whenFr: "24 juil. 2026", noteFr: "sect. 301", v: 11.1 },
+    { when: "Aug 2026", note: "latest", whenFr: "août 2026", noteFr: "dernier", v: 11.0 }
   ],
 
   // Dallas Fed estimate of core PCE inflation without tariffs, March 2026
@@ -80,7 +81,7 @@ window.TARIFF_DATA = {
 
   // Events drawn as dashed lines on the time charts
   events: {
-    tariffs: { d: "2025-04", label: "Tariffs begin" },
-    court: { d: "2026-02", label: "Court ruling" }
+    tariffs: { d: "2025-04", label: "Tariffs begin", labelFr: "Début des droits" },
+    court: { d: "2026-02", label: "Court ruling", labelFr: "Décision de la Cour" }
   }
 };

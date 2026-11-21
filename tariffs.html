@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <!-- LEARN: the ?v=... after the file name is a "cache buster". Browsers save copies of files;
        changing this text after editing style.css makes every visitor download the new version. -->
-  <link rel="stylesheet" href="style.css?v=2026-11-19b">
+  <link rel="stylesheet" href="style.css?v=2026-11-21a">
   <script>
     (function () {
       var saved = null;
@@ -40,7 +40,7 @@
         <ul>
           <li><a href="index.html">Logbook</a></li>
           <li><a href="index.html#deep-dives">Deep dives</a></li>
-          <li><a href="#sources">Sources</a></li>
+          <li><a href="#sources" data-fr-href="#sources-fr">Sources</a></li>
         </ul>
         <button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
           <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -56,6 +56,16 @@
   </nav>
 
   <main id="top" class="article wrap">
+    <div class="article-lang">
+      <button class="lang-toggle" type="button" data-target="article-body" data-page data-title-en="More Than a Tax on Imports · Jared Bridgewater" data-title-fr="Plus qu'une taxe sur les importations · Jared Bridgewater" aria-pressed="false">Lire en français</button>
+    </div>
+
+    <!-- LEARN: same trick as the logbook. Both languages live in the page; the button
+         hides one and shows the other. lang="fr" tells browsers and screen readers
+         to read the French with French pronunciation, and charts.js uses it to
+         format numbers the French way (3,1 % instead of 3.1%). -->
+    <div id="article-body">
+    <div data-lang="en">
 
     <!-- ===================== HEADER ===================== -->
     <header class="article-head">
@@ -498,6 +508,442 @@
         <li>FRED series: <a href="https://fred.stlouisfed.org/series/MANEMP">MANEMP</a>, <a href="https://fred.stlouisfed.org/series/DTWEXBGS">DTWEXBGS</a>, <a href="https://fred.stlouisfed.org/series/PCEPILFE">PCEPILFE</a>, <a href="https://fred.stlouisfed.org/series/B235RC1Q027SBEA">B235RC1Q027SBEA</a></li>
       </ul>
     </div>
+    </div>
+
+    <div data-lang="fr" lang="fr" hidden>
+    <!-- ===================== EN-TÊTE ===================== -->
+    <header class="article-head">
+      <span class="tag">Analyse approfondie · Économie</span>
+      <h1>Plus qu'une taxe sur les importations</h1>
+      <p class="dek">Cinq choses que je croyais sur les droits de douane, ce que disent vraiment les données, et pourquoi la vraie histoire est plus connectée (et moins effrayante) qu'elle n'en a l'air.</p>
+      <div class="article-meta">
+        <span>Jared Bridgewater</span>
+        <time datetime="2026-11">novembre 2026</time>
+        <span>~15 min de lecture</span>
+        <span>Données au 18 novembre 2026</span>
+      </div>
+    </header>
+
+    <aside class="tldr card" aria-labelledby="tldr-title-fr">
+      <span class="tag" id="tldr-title-fr">L'essentiel</span>
+      <ol>
+        <li><b>« Ce sont les autres pays qui paient. »</b> La plupart des études concluent que les Américains ont payé plus de 90 % des droits de douane de 2025. Une étude rigoureuse arrive plutôt à la moitié.</li>
+        <li><b>« Plus de taxes, plus d'argent. »</b> Les recettes ont vraiment bondi, jusqu'à environ 4 fois leur rythme de 2024, mais les droits de douane réduisent ce qu'ils taxent.</li>
+        <li><b>« Ça va calmer l'inflation. »</b> Ils ont ajouté environ 0,8 point à l'inflation sous-jacente, sous la forme d'une marche ponctuelle plutôt que d'une rampe.</li>
+        <li><b>« Ça va renforcer le dollar. »</b> Le dollar a baissé, parce qu'une monnaie dépend davantage de la confiance que du commerce.</li>
+        <li><b>« Tout est arbitraire. »</b> C'est un débat vieux de 235 ans, qui passe par des lois, des tribunaux et des échéances.</li>
+      </ol>
+    </aside>
+
+    <!-- ===================== INTRODUCTION ===================== -->
+    <div class="prose">
+      <h2 id="why-fr">Pourquoi j'écris ceci</h2>
+      <p>Je suis en terminale, pas économiste. Presque tout ce qui suit, je l'ai appris en quelques semaines, grâce à des manuels, des notes de recherche de la Réserve fédérale, des rapports budgétaires et beaucoup de recherches qui m'ont mené de fil en aiguille. Lisez donc ceci comme un journal d'apprentissage : ce à quoi je m'attendais, ce que les données ont vraiment montré, et ce qui m'échappe encore.</p>
+      <p>Ce n'est pas non plus un plaidoyer pour ou contre un responsable politique ou un parti. Des gens brillants et reconnus ne sont pas d'accord sur les droits de douane, et je ne suis pas en position de désigner un gagnant. Ce que je <em>peux</em> faire, c'est essayer d'expliquer comment fonctionne la machine. Une fois qu'on voit les engrenages, l'actualité paraît beaucoup moins aléatoire et, honnêtement, beaucoup moins effrayante.</p>
+      <p>Le plan : cinq intuitions sur les droits de douane que j'avais (et que, je crois, la plupart des gens ont). Pour chacune : ce qui semble évident, ce que disent les données, et pourquoi la vraie réponse est plus intéressante que l'un ou l'autre.</p>
+      <p><strong>D'abord, qu'est-ce qu'un droit de douane ?</strong> C'est une taxe sur les biens importés, payée à la frontière aux douanes américaines par l'entreprise qui fait entrer la marchandise (l'« importateur officiel »). Retenez ce dernier détail : il compte plus qu'il n'y paraît.</p>
+      <p class="notice">Les sections marquées <span class="tag">Les maths</span> détaillent les calculs. Vous pouvez les sauter et suivre quand même l'histoire, mais c'est là que chaque affirmation est vérifiée. Cliquez sur un graphique ou une image pour l'agrandir.</p>
+    </div>
+
+    <figure class="fig zoom">
+      <img src="images/port-long-beach.jpg" alt="Vue aérienne du port de Long Beach : des rangées de conteneurs empilés, des grues rouges qui déchargent un navire Maersk, et le port au loin" loading="lazy">
+      <figcaption><b>Figure 1. Le port de Long Beach, en Californie.</b> Le deuxième port à conteneurs du pays a traité un record de 9,9 millions d'EVP en 2025 (équivalent vingt pieds, la taille standard d'un conteneur). Son voisin, le port de Los Angeles, en a traité 10,2 millions de plus. Chacun de ces conteneurs passe la douane, et c'est là que les droits de douane sont réellement payés.
+        <span class="src">Photo via le <a href="https://2021-2025.state.gov/briefings-foreign-press-centers/economic-outlook-from-the-port-of-long-beach-california/">Département d'État américain</a>. Volumes : ports de Long Beach et de Los Angeles, janvier 2026.</span></figcaption>
+    </figure>
+
+    <!-- ===================== INTUITION 1 ===================== -->
+    <div class="prose">
+      <h2 id="who-pays-fr">1. « Ce sont les autres pays qui paient le droit de douane »</h2>
+      <span class="tag">Qui paie</span>
+      <p><strong>Ce qui semble évident :</strong> c'est une taxe sur <em>leurs</em> produits, donc ce sont <em>eux</em> qui la paient.</p>
+      <p><strong>Ce qui se passe vraiment :</strong> le chèque est signé par une entreprise américaine, à l'ordre du gouvernement américain. Mais les économistes s'intéressent à une autre question, appelée <em>incidence fiscale</em> : qui finit appauvri par la taxe ? Il y a trois réponses possibles, et c'est généralement un mélange :</p>
+      <ol>
+        <li><strong>L'exportateur étranger</strong> baisse son prix pour rester compétitif.</li>
+        <li><strong>L'importateur américain</strong> absorbe le coût sur sa marge.</li>
+        <li><strong>Le consommateur américain</strong> paie plus cher en magasin.</li>
+      </ol>
+      <p>Voici la façon la plus claire que j'ai trouvée pour le voir. Une entreprise importe une pièce à 100 $, et il y a un droit de douane de 25 %. Si l'exportateur continue de la vendre 100 $, l'importateur paie 125 $, et le coût retombe sur les Américains. Si l'exportateur baisse son prix à 80 $, l'importateur paie 80 $ + 20 $ de droit = 100 $, comme avant. Dans ce cas, c'est l'entreprise étrangère qui a, en pratique, payé tout le droit de douane.</p>
+    </div>
+
+    <figure class="fig">
+      <p class="fig-title">À voir : qui paie vraiment un droit de douane ?</p>
+      <p class="fig-sub">L'exemple des 100 $, en animation (45 secondes, en anglais)</p>
+      <video class="fig-video" controls preload="metadata" playsinline poster="videos/who-pays-poster.jpg">
+        <source src="videos/who-pays.mp4" type="video/mp4">
+        Votre navigateur ne peut pas lire cette vidéo. <a href="videos/who-pays.mp4">La télécharger.</a>
+      </video>
+      <figcaption><b>Vidéo 1. Le même droit de douane, trois résultats.</b> Si l'exportateur garde son prix, les Américains paient tout le droit de douane. S'il baisse son prix à 80 $, c'est l'exportateur qui le paie. Les barres glissent ensuite là où se situe chaque étude de 2025, à partir des mêmes calculs que la section suivante.
+        <span class="src">Réalisée avec Manim (vidéo en anglais). Code : <a href="https://github.com/GubbGub/manim-deep-dives/tree/main/tariffs">GubbGub/manim-deep-dives</a></span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Alors, que s'est-il passé en 2025 ? Les chercheurs peuvent le mesurer en comparant les prix de millions d'envois, et ils ne sont pas entièrement d'accord :</p>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">toucher pour agrandir</span>
+      <p class="fig-title">La plupart des études : les Américains ont payé plus de 90 % des droits de 2025</p>
+      <p class="fig-sub">Part du coût des droits de douane supportée aux États-Unis (bleu) ou absorbée par les exportateurs étrangers (gris)</p>
+      <div data-chart="who-paid"></div>
+      <figcaption><b>Figure 2. Trois façons de mesurer la même chose.</b> Chaque étude compare ce que facturaient les exportateurs étrangers avant et après les droits de douane. Si leurs prix n'ont pas baissé, ce sont les Américains qui ont payé. La Fed de New York et l'Institut de Kiel n'ont trouvé presque aucune baisse de prix. Freund a pondéré les produits selon ce que les États-Unis importaient <em>avant</em> la guerre commerciale, et a trouvé que les exportateurs en avaient absorbé près de la moitié. La ligne en pointillés marque un partage égal.
+        <span class="src">Sources : Banque fédérale de réserve de New York (févr. 2026) ; Institut de Kiel (janv. 2026) ; Caroline Freund via la Tax Foundation (2026)</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Ce désaccord mérite qu'on s'y arrête, parce que c'est à cela que ressemble la vraie recherche. La plupart des études disent que les Américains en ont payé l'essentiel. Au moins une étude rigoureuse parle plutôt d'un partage. Et la part n'est pas figée : la Fed de New York a constaté que les exportateurs étrangers en ont payé une part croissante au fil de 2025, même si les Américains en payaient toujours la majorité.</p>
+
+      <div class="math-box">
+        <span class="tag">Les maths</span>
+        <h3>Celui qui peut partir paie moins</h3>
+        <p>Soit <i>ε<sub>d</sub></i> l'élasticité de la demande des acheteurs (de combien ils réduisent leurs achats quand le prix augmente de 1 %) et <i>ε<sub>s</sub></i> l'élasticité de l'offre des vendeurs (avec quelle facilité ils peuvent vendre ailleurs). Alors :</p>
+        <math display="block">
+          <mrow><mtext>part des acheteurs</mtext><mo>=</mo>
+            <mfrac><msub><mi>ε</mi><mi>s</mi></msub><mrow><msub><mi>ε</mi><mi>s</mi></msub><mo>+</mo><msub><mi>ε</mi><mi>d</mi></msub></mrow></mfrac>
+          </mrow>
+        </math>
+        <math display="block">
+          <mrow><mtext>part des vendeurs</mtext><mo>=</mo>
+            <mfrac><msub><mi>ε</mi><mi>d</mi></msub><mrow><msub><mi>ε</mi><mi>s</mi></msub><mo>+</mo><msub><mi>ε</mi><mi>d</mi></msub></mrow></mfrac>
+          </mrow>
+        </math>
+        <p>Autrement dit : <strong>celui qui a le moins d'alternatives finit par payer.</strong> Imaginons qu'un importateur américain ne puisse pas facilement changer de fournisseur (<i>ε<sub>d</sub></i> = 0,5), mais que l'exportateur étranger puisse facilement vendre en Europe à la place (<i>ε<sub>s</sub></i> = 1,5) :</p>
+        <div class="worked">part des acheteurs = 1,5 / (1,5 + 0,5) = 0,75 → les acheteurs paient 75 %</div>
+        <p><strong>Vérification :</strong> si les vendeurs n'avaient vraiment nulle part ailleurs où vendre (<i>ε<sub>s</sub></i> = 0), les acheteurs paieraient 0 / (0 + <i>ε<sub>d</sub></i>) = 0 %, et l'exportateur absorberait tout le droit de douane. C'est exactement l'argument selon lequel le marché américain est trop grand pour qu'on y renonce. Les données de 2025 suggèrent qu'au moins à court terme, la plupart des exportateurs avaient plus d'options que les acheteurs américains.</p>
+      </div>
+
+      <div class="aside">
+        <p><strong>Tiens, pourquoi ?</strong> Si les États-Unis sont le plus grand marché de consommation du monde, pourquoi les exportateurs ne baisseraient-ils pas simplement leurs prix pour continuer à y vendre ? Une partie de la réponse semble être le temps. À court terme, un importateur ne peut pas changer de fournisseur du jour au lendemain, et un exportateur peut parfois vendre ses produits ailleurs. Sur de plus longues périodes, ces options évoluent, ce qui explique en partie pourquoi le partage peut changer.</p>
+      </div>
+    </div>
+
+    <!-- ===================== INTUITION 2 ===================== -->
+    <div class="prose">
+      <h2 id="revenue-fr">2. « Si on taxe davantage les importations, l'État gagne plus d'argent »</h2>
+      <span class="tag">Recettes</span>
+      <p><strong>Ce qui semble évident :</strong> taux de taxe plus élevé × beaucoup d'importations = beaucoup de recettes.</p>
+      <p><strong>La part de vrai :</strong> les recettes ont vraiment bondi. Les recettes douanières sont passées de 84 milliards de dollars sur l'exercice 2024 à 202 milliards sur l'exercice 2025. Pour l'année civile 2025, le déficit budgétaire s'est établi à 1 670 milliards de dollars, le plus faible depuis trois ans, et les recettes douanières record y étaient pour beaucoup.</p>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">toucher pour agrandir</span>
+      <p class="fig-title">Fin 2025, les recettes douanières tournaient à environ 4 fois leur rythme de 2024</p>
+      <p class="fig-sub">Droits de douane fédéraux, en milliards de dollars, en rythme annuel corrigé des variations saisonnières, par trimestre</p>
+      <div data-chart="customs"></div>
+      <figcaption><b>Figure 3. L'argent est vraiment arrivé, puis a commencé à diminuer.</b> Un « rythme annuel » signifie « si chaque trimestre ressemblait à celui-ci, le total de l'année serait de… », ce qui permet de comparer les trimestres équitablement. Les recettes sont passées d'un rythme de 89 milliards à 367 milliards en un an, puis ont reculé quand la décision de la Cour a supprimé certains droits et que les importateurs ont modifié leurs achats.
+        <span class="src">Source : Bureau of Economic Analysis via FRED, série B235RC1Q027SBEA</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <div class="math-box">
+        <span class="tag">Les maths</span>
+        <h3>Les calculs</h3>
+        <div class="worked">exercices budgétaires : 202 / 84 ≈ 2,4×<br>rythme trimestriel : 367 / 89 ≈ 4,1×<br>part du budget : 202 / 5 235 ≈ 3,9 % des recettes fédérales (exercice 2025)</div>
+        <p>Pour donner l'échelle : en 1792, les droits de douane finançaient environ <strong>95 %</strong> de l'État fédéral. Les droits de douane <em>étaient</em> autrefois le budget fédéral. Aujourd'hui, ils en représentent une part non négligeable, mais ils ne peuvent pas remplacer l'impôt sur le revenu.</p>
+      </div>
+
+      <p><strong>Les rebondissements :</strong></p>
+      <ul>
+        <li><strong>Les droits de douane réduisent leur propre base.</strong> Quand on taxe quelque chose, les gens en achètent moins. Le Budget Lab de Yale suit cela avec deux chiffres : le taux des droits sur ce que nous importions <em>avant</em>, et le taux une fois que les gens ont modifié leurs achats. En novembre 2025, ils étaient de 16,8 % et 14,4 %. L'écart correspond aux importations qui ont disparu, et aux recettes qui sont parties avec elles.</li>
+        <li><strong>D'où vient l'argent.</strong> Si les Américains paient l'essentiel du droit de douane (intuition 1), alors une grande partie de ces recettes est un impôt prélevé sur les Américains, simplement par une autre porte que la déclaration de revenus.</li>
+        <li><strong>Tout ne reste pas.</strong> Après que la Cour suprême a annulé les droits imposés en vertu de la loi sur les pouvoirs d'urgence (intuition 5), environ 166 milliards de dollars sont devenus remboursables aux importateurs, avec intérêts. Seul l'importateur peut les réclamer. Un client qui a payé plus cher ne le peut pas.</li>
+      </ul>
+
+      <div class="math-box">
+        <span class="tag">Les maths</span>
+        <h3>Pourquoi un droit plus élevé peut rapporter moins</h3>
+        <p>Les recettes, c'est le taux × la base. Soit <i>t</i> le taux du droit de douane et <i>M</i>(<i>t</i>) la valeur des importations à ce taux. Le piège, c'est que <i>M</i> diminue quand <i>t</i> augmente. Dans un modèle simple, les importations baissent avec une élasticité <i>ε</i> :</p>
+        <math display="block">
+          <mrow><mi>R</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mi>t</mi><mo>·</mo><mi>M</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow>
+        </math>
+        <math display="block">
+          <mrow><mi>M</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><msub><mi>M</mi><mn>0</mn></msub><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>t</mi><mo>)</mo></mrow><mrow><mo>−</mo><mi>ε</mi></mrow></msup></mrow>
+        </math>
+        <p>Pour trouver le droit qui rapporte le plus, on dérive et on égale à zéro :</p>
+        <math display="block">
+          <mrow><mfrac><mrow><mi>d</mi><mi>R</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo>
+            <msub><mi>M</mi><mn>0</mn></msub><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>t</mi><mo>)</mo></mrow><mrow><mo>−</mo><mi>ε</mi></mrow></msup>
+            <mrow><mo>[</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mi>ε</mi><mi>t</mi></mrow><mrow><mn>1</mn><mo>+</mo><mi>t</mi></mrow></mfrac><mo>]</mo></mrow>
+            <mo>=</mo><mn>0</mn></mrow>
+        </math>
+        <math display="block">
+          <mrow><mo>⟹</mo><mspace width="0.4em"/>
+            <msup><mi>t</mi><mo>*</mo></msup><mo>=</mo><mfrac><mn>1</mn><mrow><mi>ε</mi><mo>−</mo><mn>1</mn></mrow></mfrac></mrow>
+        </math>
+        <div class="worked">ε = 2 → recettes maximales avec un droit de 100 %<br>ε = 3 → recettes maximales avec un droit de 50 %</div>
+        <p>Au-delà de ce point, augmenter le taux <em>réduit</em> les recettes, parce que la base diminue plus vite que le taux n'augmente. C'est la même forme que la courbe de Laffer. Les élasticités réelles varient selon les produits ; c'est donc un modèle simplifié, pas une prévision. Mais il montre pourquoi « plus de taxes = plus d'argent » n'est vrai que jusqu'à un certain point.</p>
+      </div>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">toucher pour agrandir</span>
+      <p class="fig-title">Modèle simplifié : au-delà d'un certain point, des droits plus élevés rapportent moins</p>
+      <p class="fig-sub">Recettes = t × importations, avec importations = 100 × (1 + t)<sup>−ε</sup>. Illustration, pas une prévision.</p>
+      <div data-chart="revenue-model"></div>
+      <figcaption><b>Figure 4. Deux forces qui tirent en sens opposés.</b> À des taux faibles, augmenter le droit ajoute des recettes presque à l'identique. Quand le taux grimpe, les importations diminuent plus vite, et chaque point de droit supplémentaire finit par faire perdre plus de base qu'il ne rapporte en taux. Plus les acheteurs sont sensibles (ε plus grand), plus cela arrive tôt.
+        <span class="src">Calculé à partir du modèle présenté dans le texte ; élasticités à titre d'illustration</span></figcaption>
+    </figure>
+
+    <!-- ===================== INTUITION 3 ===================== -->
+    <div class="prose">
+      <h2 id="inflation-fr">3. « Les droits de douane devraient freiner l'inflation, puisqu'on dépensera moins »</h2>
+      <span class="tag">Inflation</span>
+      <p><strong>Ce qui semble évident :</strong> si les importations coûtent plus cher, les gens achètent moins, moins de dépenses refroidit l'économie, et les prix se calment.</p>
+      <p><strong>Ce qui s'est passé :</strong> celle-ci m'a piégé. L'inflation, c'est le <em>rythme auquel les prix augmentent</em>. Un droit de douane augmente directement le prix du bien taxé, et de tout ce qui est fabriqué avec des pièces importées (par exemple, une machine à laver fabriquée aux États-Unis avec de l'acier importé). Donc, au moins au début, il fait <em>monter</em> l'inflation mesurée.</p>
+      <p>Les économistes de la Fed ont mesuré de combien :</p>
+      <ul>
+        <li>Une note de la Réserve fédérale estime que les droits de douane mis en place jusqu'en novembre 2025 ont augmenté les prix des biens (hors alimentation et énergie) de 3,1 % jusqu'en février 2026, assez pour expliquer tout l'« excès » d'inflation des biens par rapport à l'avant-pandémie.</li>
+        <li>La Fed de Dallas estime que les droits de douane ont ajouté environ 0,8 point de pourcentage à l'inflation sous-jacente en mars 2026. Sans eux, elle aurait été d'environ 2,3 %, proche de la cible de 2 % de la Fed.</li>
+        <li>La Fed de Boston arrive à un chiffre plus bas : les gains de productivité ont en partie compensé les droits, pour un effet net d'environ 0,5 point.</li>
+      </ul>
+
+      <div class="math-box">
+        <span class="tag">Les maths</span>
+        <h3>Une marche, pas une rampe</h3>
+        <p>Appelons <i>P</i> le niveau des prix et <i>π</i> l'inflation normale. Chaque année, <i>P</i> est multiplié par (1 + <i>π</i>). Un droit de douane ajoute une hausse ponctuelle <i>s</i> :</p>
+        <math display="block">
+          <mrow><msub><mi>P</mi><mn>1</mn></msub><mo>=</mo><msub><mi>P</mi><mn>0</mn></msub><mo>(</mo><mn>1</mn><mo>+</mo><mi>π</mi><mo>)</mo><mo>(</mo><mn>1</mn><mo>+</mo><mi>s</mi><mo>)</mo></mrow>
+        </math>
+        <math display="block">
+          <mrow><msub><mi>P</mi><mn>2</mn></msub><mo>=</mo><msub><mi>P</mi><mn>1</mn></msub><mo>(</mo><mn>1</mn><mo>+</mo><mi>π</mi><mo>)</mo></mrow>
+        </math>
+        <p>Donc la première année, l'inflation mesurée ≈ <i>π</i> + <i>s</i>. La deuxième année, elle revient à <i>π</i>. Avec les chiffres de la Fed de Dallas :</p>
+        <div class="worked">π ≈ 2,3 % sous-jacente + s ≈ 0,8 point dû aux droits → mesurée ≈ 3,1 %<br>réelle, d'après l'indice des prix PCE sous-jacent : 129,030 / 125,144 − 1 = 3,1 %  ✓</div>
+        <p>Le piège : les prix ne redescendent pas. La deuxième année, l'inflation revient à la normale, mais tout reste environ 0,8 % plus cher qu'il ne l'aurait été. Une marche est permanente. Elle arrête simplement de monter.</p>
+      </div>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">toucher pour agrandir</span>
+      <p class="fig-title">Inflation sous-jacente : 3,1 % réelle contre ~2,3 % sans droits de douane (mars 2026)</p>
+      <p class="fig-sub">Prix PCE hors alimentation et énergie, variation sur un an en %, mensuel</p>
+      <div data-chart="core-pce"></div>
+      <figcaption><b>Figure 5. La marche arrive tard.</b> L'inflation « sous-jacente » exclut l'alimentation et l'énergie, dont les prix varient beaucoup, pour montrer la tendance de fond. Elle a à peine bougé en 2025 et n'est montée vers 3,1 % qu'en 2026, près d'un an après les grands droits de douane, ce qui concorde avec les recherches selon lesquelles la répercussion complète sur les prix en magasin a pris environ sept mois. Le cercle vide est l'estimation par la Fed de Dallas de ce qu'aurait été l'inflation sans droits de douane.
+        <span class="src">Source : indice des prix PCE sous-jacent du BEA via FRED (PCEPILFE), variation sur un an calculée par moi ; Fed de Dallas (mai 2026)</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>L'intuition n'est donc pas complètement absurde. Des prix plus élevés peuvent réduire ce que les gens peuvent se permettre, ce qui refroidit un peu la demande. C'est l'une des raisons pour lesquelles la Fed traite les hausses de prix liées aux droits avec prudence au lieu de freiner brutalement. Mais « les droits de douane font baisser l'inflation », ce n'est pas ce que montrent les données.</p>
+    </div>
+
+    <!-- ===================== INTUITION 4 ===================== -->
+    <div class="prose">
+      <h2 id="dollar-fr">4. « Les droits de douane renforcent le dollar »</h2>
+      <span class="tag">Le dollar</span>
+      <p><strong>Ce que dit le manuel :</strong> si les Américains achètent moins de produits importés, ils ont besoin de moins d'euros, de yens et de yuans, donc ils vendent moins de dollars. Moins de ventes, c'est un dollar plus fort. Certains modèles prédisent que le dollar monte assez pour annuler une partie du droit de douane.</p>
+      <p><strong>Ce qui s'est passé :</strong> l'inverse. L'indice du dollar américain a chuté de 10,8 % au premier semestre 2025, son pire premier semestre depuis 1973, l'année où les monnaies ont commencé à flotter librement.</p>
+
+      <div class="math-box">
+        <span class="tag">Les maths</span>
+        <h3>Ce que prévoyait le manuel, et ce qui s'est passé</h3>
+        <p>Le prix en dollars d'un bien importé, c'est le prix étranger <i>p</i>*, multiplié par le taux de change <i>e</i> (dollars par unité de devise étrangère), multiplié par un plus le droit de douane :</p>
+        <math display="block">
+          <mrow><msub><mi>p</mi><mtext>$</mtext></msub><mo>=</mo><msup><mi>p</mi><mo>*</mo></msup><mo>·</mo><mi>e</mi><mo>·</mo><mo>(</mo><mn>1</mn><mo>+</mo><mi>t</mi><mo>)</mo></mrow>
+        </math>
+        <p><strong>Le cas du manuel :</strong> un droit de 10 %, et le dollar se renforce de 10 %, donc un euro ne coûte plus que 1/1,10 de ce qu'il coûtait en dollars :</p>
+        <div class="worked">(1 / 1,10) × 1,10 = 1,00 → aucun changement. La monnaie annule le droit de douane.</div>
+        <p><strong>Ce qui s'est réellement passé (illustration) :</strong> l'euro a pris 13,8 % face au dollar au premier semestre 2025. Pour un bien à 100 € soumis à un droit de 10 % :</p>
+        <div class="worked">1,138 × 1,10 = 1,252 → environ 25 % de plus en dollars</div>
+        <p>Le mouvement de la monnaie s'est <em>ajouté</em> au droit de douane au lieu de l'annuler. (10 % n'est qu'un exemple ; les taux réels sur les produits européens ont changé au cours de l'année.)</p>
+      </div>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">toucher pour agrandir</span>
+      <p class="fig-title">Le dollar a baissé d'environ 7 % début 2025 au lieu de monter</p>
+      <p class="fig-sub">Indice large du dollar pondéré par les échanges de la Fed (janv. 2006 = 100), moyenne mensuelle. Prévision du manuel : à la hausse.</p>
+      <div data-chart="dollar"></div>
+      <figcaption><b>Figure 6. Le choix de l'indice change le titre.</b> Le fameux « −10,8 % » est celui de l'indice DXY, composé surtout de l'euro. Ici, c'est l'indice plus large de la Fed, pondéré par les devises de tous les grands partenaires commerciaux, dont la Chine et le Mexique. Il a moins baissé, d'environ 6,8 % de janvier à juillet 2025, mais dans le même sens. Demandez-vous toujours comment un chiffre a été mesuré.
+        <span class="src">Source : indice large du dollar de la Réserve fédérale via FRED (DTWEXBGS)</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <div class="aside">
+        <p><strong>Tiens, pourquoi ?</strong> C'est mon moment préféré de tout le projet. Le modèle du manuel n'est pas faux, mais il ne couvre que les flux commerciaux, et <strong>le commerce n'est qu'une petite partie de ce qui fait bouger une monnaie</strong>. Chaque jour, des investisseurs et des banques centrales décident où placer des milliers de milliards de dollars d'épargne, et les taux de change suivent leur <em>confiance</em> : dans la croissance, la politique économique, la dette et les institutions. Les analystes de S&amp;P Global ont pointé à la fois les droits de douane, les inquiétudes sur l'indépendance de la Fed, la hausse de la dette américaine et les craintes d'inflation.</p>
+      </div>
+      <p>Pour garder le sens des proportions : même après cette baisse, S&amp;P notait que le dollar restait plus de 15 % au-dessus de sa moyenne de long terme en termes réels. Et un dollar plus faible n'est pas forcément une mauvaise nouvelle : il rend les exportations américaines moins chères pour le reste du monde, ce qui fait partie de ce que voulaient les partisans des droits de douane.</p>
+      <p>La leçon plus large : <strong>une monnaie ressemble davantage à un vote de confiance qu'à un tableau des scores du commerce.</strong> Cette idée prépare la partie la plus profonde de cette histoire.</p>
+    </div>
+
+    <!-- ===================== INTUITION 5 ===================== -->
+    <div class="prose">
+      <h2 id="arbitrary-fr">5. « Tout cela est arbitraire »</h2>
+      <span class="tag">Histoire, idées et droit</span>
+      <p>On peut avoir cette impression en regardant l'actualité : des taux annoncés, suspendus, relevés, annulés. Mais plus je creusais, plus cela ressemblait à un débat très ancien, qui passe aujourd'hui par un système très encadré par des règles.</p>
+
+      <h3>1791 : le plan de Hamilton</h3>
+      <p>Le débat sur les droits de douane est aussi vieux que le pays. Le premier grand tarif douanier, en 1789, était d'environ 5 % sur la plupart des biens et de 7,5 à 10 % sur certains produits de luxe et manufacturés. En 1791, le secrétaire au Trésor Alexander Hamilton a remis au Congrès son <em>Rapport sur les manufactures</em>, un plan pour transformer une nation agricole en nation industrielle.</p>
+    </div>
+
+    <div class="fig-pair">
+      <figure class="fig zoom">
+        <img src="images/hamilton.jpg" alt="Portrait à l'huile d'Alexander Hamilton en habit noir et cravate blanche sur fond sombre, par John Trumbull" loading="lazy">
+        <figcaption><b>Figure 7. Alexander Hamilton, peint après sa mort.</b> John Trumbull a peint ce portrait vers 1806, après que Hamilton a été tué en duel par Aaron Burr en 1804, alors que le public voulait garder son image. Les deux hommes avaient servi dans l'état-major de George Washington pendant la Révolution, et Trumbull a peint de nombreux officiers de l'époque dans l'uniforme continental bleu et chamois. Ici, Hamilton porte le simple habit noir d'un civil du début du XIX<sup>e</sup> siècle.
+          <span class="src">The Metropolitan Museum of Art, <a href="https://www.metmuseum.org/art/collection/search/12819">Open Access</a> (domaine public)</span></figcaption>
+      </figure>
+
+      <figure class="fig zoom">
+        <img src="images/report-on-manufactures.jpg" alt="Page de titre du rapport du secrétaire au Trésor sur les manufactures, présenté le 5 décembre 1791" loading="lazy">
+        <figcaption><b>Figure 8. Le Rapport sur les manufactures, 1791.</b> Le manuel fondateur de Hamilton pour l'industrie américaine, qui a fait des droits d'importation un outil délibéré de politique économique. Mais, comme le montre le paragraphe suivant, son outil préféré était la subvention.
+          <span class="src">Source : <a href="https://www.gilderlehrman.org/history-resources/spotlight-primary-source/hamiltons-report-subject-manufactures-1791">Gilder Lehrman Institute of American History</a></span></figcaption>
+      </figure>
+    </div>
+
+    <div class="prose">
+      <p>Hamilton soutenait des droits de douane modérés, mais son outil préféré était les <strong>primes</strong>, des subventions directes aux nouvelles industries. Selon ses propres mots : « Bounties have not like high protecting duties, a tendency to produce scarcity » (contrairement aux droits protecteurs élevés, les primes n'ont pas tendance à créer la pénurie). Une subvention aide l'usine sans augmenter les prix pour les acheteurs. L'ironie, c'est que le Congrès a adopté presque toutes les propositions douanières de Hamilton en 1792 et rejeté les primes.</p>
+
+      <h3>Aujourd'hui : les arguments en faveur des droits de douane, sous leur meilleur jour</h3>
+      <p>Peter Navarro, conseiller au commerce du président, cite souvent Hamilton. La meilleure version de son argument, telle que je la comprends :</p>
+      <ul>
+        <li><strong>Les règles du jeu ne sont pas équitables.</strong> La théorie du libre-échange suppose une concurrence loyale. Si un gouvernement étranger subventionne ses usines pour casser vos prix, un petit droit de douane ne protégera pas une industrie dont vous auriez besoin en cas de guerre.</li>
+        <li><strong>Les chaînes d'approvisionnement relèvent de la sécurité nationale.</strong> Assembler quelque chose en Amérique avec de l'acier et des puces étrangers ne vous rend pas résilient.</li>
+        <li><strong>Les droits de douane sont un levier.</strong> La menace de perdre l'accès au marché américain peut amener d'autres pays à la table des négociations.</li>
+      </ul>
+      <p>Pas besoin d'être d'accord avec les outils pour voir que ces préoccupations sont réelles, et qu'elles portent sur la sécurité et la résilience, pas seulement sur l'argent.</p>
+    </div>
+
+    <figure class="fig zoom">
+      <img src="images/navarro.jpg" alt="Peter Navarro parlant sur scène, un livre à la main, devant un grand écran" loading="lazy">
+      <figcaption><b>Figure 9. Peter Navarro, juillet 2024.</b> Navarro a dirigé le conseil du commerce de la Maison-Blanche pendant le premier mandat de Trump et est revenu comme conseiller principal au commerce en 2025. C'est la voix moderne la plus connue en faveur des droits de douane pour reconstruire l'industrie américaine. Ici, il s'exprime au Believers' Summit de Turning Point Action à West Palm Beach, en Floride.
+        <span class="src">Photo : Gage Skidmore, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, via Wikimedia Commons</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <h3>L'énigme de fond : le dilemme de Triffin</h3>
+      <p>En 1960, l'économiste Robert Triffin a averti le Congrès d'un piège. Le dollar était devenu la monnaie de réserve mondiale, adossée à l'or. Pour fournir des dollars au monde, les États-Unis devaient en envoyer à l'étranger plus qu'ils n'en faisaient revenir, jusqu'à ce qu'il y ait plus de dollars à l'étranger que d'or pour les garantir. C'est exactement ce qui s'est passé en 1971 : le président Nixon a mis fin à la convertibilité du dollar en or.</p>
+    </div>
+
+    <figure class="fig zoom">
+      <img src="images/triffin.jpg" alt="Photo en noir et blanc de Robert Triffin debout derrière un pupitre, devant un tableau couvert de notes sur l'or et le dollar" loading="lazy">
+      <figcaption><b>Figure 10. Robert Triffin au tableau.</b> L'économiste de Yale a établi l'arithmétique de son dilemme des années avant la crise : une monnaie de réserve adossée à l'or ne pouvait pas continuer à fournir des dollars au monde sans finir par dépasser le stock d'or américain.
+        <span class="src">Photo : Elena Danescu, via <a href="https://commons.wikimedia.org/wiki/File:Robert_%C2%A3Triffin.jpg">Wikimedia Commons</a></span></figcaption>
+    </figure>
+
+    <figure class="fig portrait-fig zoom">
+      <img src="images/nyt-1971-08-16.jpg" alt="Une du New York Times du 16 août 1971, texte des articles flouté, titrée : Nixon ordonne un gel des salaires et des prix de 90 jours, demande des baisses d'impôts et de nouveaux emplois dans un vaste plan ; rompt le lien entre le dollar et l'or" loading="lazy">
+      <figcaption><b>Figure 11. Le lendemain matin, 16 août 1971.</b> Le lendemain de l'allocution télévisée de Nixon, la une annonçait la fin du lien entre le dollar et l'or, un gel des salaires et des prix pendant 90 jours, et une surtaxe temporaire de 10 % sur les importations, destinée à pousser les autres pays à réévaluer leur monnaie. Les droits de douane faisaient partie de cette histoire bien avant 2025.
+        <span class="src">Une © The New York Times, texte des articles flouté ; reproduite à des fins de commentaire pédagogique</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Stephen Miran, qui a conseillé l'administration, soutient qu'une version moderne du dilemme de Triffin s'applique encore. Selon cette idée, la demande mondiale de dollars maintient la monnaie surévaluée, ce qui rend les exportations américaines chères et use l'industrie. Si c'est vrai, les déficits commerciaux sont en partie un effet secondaire du rôle mondial du dollar, et pas seulement le signe de mauvais accords commerciaux.</p>
+      <p>Mais de nombreux économistes contestent fermement cette idée :</p>
+      <ul>
+        <li>Michael Bordo et Robert McCauley soutiennent que les banques centrales étrangères ne sont plus le moteur des déficits américains, et que nous ne sommes donc plus vraiment « au pays de Triffin ».</li>
+        <li>D'autres rappellent que pendant Bretton Woods, quand on s'attendrait à ce que cet effet soit le plus fort, les États-Unis n'ont jamais eu de déficit important de leur balance courante.</li>
+        <li>Les dollars peuvent sortir par l'investissement plutôt que par le commerce. Et certains estiment que le vrai problème, ce sont les déficits budgétaires persistants, pas le rôle de monnaie de réserve en lui-même.</li>
+      </ul>
+      <p>Je ne peux pas trancher ce débat, et personne ne semble l'avoir fait encore. Mais c'est l'exemple le plus clair de ce que j'entends par <em>implications mondiales</em>. Une taxe sur l'acier importé est liée au prix de la dette publique américaine, à la demande mondiale de dollars, et à la façon dont 1971 s'est déroulé.</p>
+    </div>
+
+    <figure class="fig">
+      <p class="fig-title">À voir : le dilemme de Triffin</p>
+      <p class="fig-sub">L'or s'épuise, les dollars s'accumulent à l'étranger, et le guichet de l'or se ferme (70 secondes, en anglais)</p>
+      <video class="fig-video" controls preload="metadata" playsinline poster="videos/triffin-poster.jpg">
+        <source src="videos/triffin.mp4" type="video/mp4">
+        Votre navigateur ne peut pas lire cette vidéo. <a href="videos/triffin.mp4">La télécharger.</a>
+      </video>
+      <figcaption><b>Vidéo 2. Une promesse qui ne pouvait pas suivre.</b> Chaque lingot représente 1 milliard de dollars d'or américain, d'après les chiffres de la Réserve fédérale pour 1949, 1960 et 1971. La barre bleue représente les dollars détenus à l'étranger. Sa forme est une illustration, sauf au point où elle dépasse l'or en 1960, quand la promesse des 35 $ ne pouvait plus être tenue pour tout le monde à la fois.
+        <span class="src">Réalisée avec Manim (vidéo en anglais). Code : <a href="https://github.com/GubbGub/manim-deep-dives/tree/main/tariffs">GubbGub/manim-deep-dives</a></span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <h3>Les règles fonctionnent</h3>
+      <p>Dernière chose qui a rendu tout cela moins arbitraire à mes yeux : le système a des contre-pouvoirs, et ils ont visiblement fonctionné.</p>
+      <ul>
+        <li>La Constitution donne au Congrès le pouvoir de lever l'impôt, y compris les droits de douane. Les présidents fixent des droits de douane en vertu de lois votées par le Congrès.</li>
+        <li>Le 20 février 2026, la Cour suprême a jugé, par 6 voix contre 3, que la loi sur les pouvoirs d'urgence (IEEPA) n'autorise pas du tout les droits de douane.</li>
+        <li>L'administration s'est tournée vers une autre loi, la section 122 du Trade Act de 1974, pour un droit de douane mondial temporaire. Cette loi limite un tel droit à 150 jours ; il a donc expiré le 24 juillet 2026.</li>
+        <li>Le même jour, de nouveaux droits de 10 à 12,5 % sur 60 économies sont entrés en vigueur au titre de la section 301, une loi qui a ses propres procédures et ses propres contestations en justice.</li>
+      </ul>
+    </div>
+
+    <figure class="fig portrait-fig zoom">
+      <img src="images/learning-resources-v-trump.jpg" alt="Première page de l'arrêt de la Cour suprême dans l'affaire Learning Resources, Inc. v. Trump, rendu le 20 février 2026" loading="lazy">
+      <figcaption><b>Figure 12. <i>Learning Resources, Inc. v. Trump</i> (2026).</b> La première page de l'arrêt de la Cour suprême. Par 6 voix contre 3, dans un arrêt rédigé par le président de la Cour John Roberts, la Cour a jugé que la loi de 1977 sur les pouvoirs d'urgence (IEEPA) ne permet pas aux présidents d'imposer des droits de douane. La Maison-Blanche s'est alors tournée vers des lois commerciales plus étroites votées par le Congrès, en commençant par un droit temporaire de 150 jours.
+        <span class="src">Source : Cour suprême des États-Unis (domaine public)</span></figcaption>
+    </figure>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">toucher pour agrandir</span>
+      <p class="fig-title">Taux moyen des droits de douane américains : ~3 % → 18 % → environ 11 % aujourd'hui</p>
+      <p class="fig-sub">Taux moyen effectif / légal des droits de douane, Budget Lab de Yale, en %</p>
+      <div data-chart="tariff-rate"></div>
+      <figcaption><b>Figure 13. Toute l'histoire en un seul chiffre.</b> Un « taux moyen effectif », c'est le total des droits divisé par le total des importations : un seul chiffre résume ainsi des milliers de taux par produit et par pays. Même après la décision de la Cour, le taux actuel est d'environ 11,0 / 2,7 ≈ 4 fois le niveau de 2022-2024, le plus élevé depuis les années 1940, hors 2025.
+        <span class="src">Source : Budget Lab de Yale, rapports State of U.S. Tariffs (juil. 2025 – août 2026). *Le chiffre 2022-2024 repose sur les droits réellement perçus, une mesure légèrement différente.</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>On peut trouver que c'est une bonne ou une mauvaise politique. Dans les deux cas, ce n'est pas le chaos. Ce sont des lois, des tribunaux, des échéances et des remboursements, le tout consigné publiquement.</p>
+
+      <!-- ===================== LES USINES ===================== -->
+      <h2 id="factories-fr">Alors, les usines sont-elles revenues ?</h2>
+      <span class="tag">Le bilan</span>
+      <p>C'est la question que tout le reste sert à éclairer, et la réponse honnête est : <strong>mitigé, et trop tôt pour conclure.</strong></p>
+      <ul>
+        <li>Les emplois industriels reculaient déjà <em>avant</em> les droits de douane : de janvier 2024 à janvier 2025, les États-Unis ont perdu environ <strong>202 000</strong> emplois dans l'industrie manufacturière.</li>
+        <li>D'avril 2025 à février 2026, ils en ont perdu environ <strong>79 000</strong> de plus.</li>
+        <li>Après un point bas à 12,58 millions en décembre 2025, les usines ont ajouté environ <strong>58 000</strong> emplois jusqu'en août 2026.</li>
+        <li>Variation nette de janvier 2025 à août 2026 : environ <strong>−35 000</strong>.</li>
+      </ul>
+    </div>
+
+    <figure class="fig zoom">
+      <span class="zoom-hint">toucher pour agrandir</span>
+      <p class="fig-title">L'emploi industriel a baissé avant et après les droits de douane, puis a regagné 58 000 postes</p>
+      <p class="fig-sub">Emploi manufacturier américain, en millions, corrigé des variations saisonnières, mensuel (dernières données révisées)</p>
+      <div data-chart="manemp"></div>
+      <figcaption><b>Figure 14. Une tendance antérieure aux droits de douane.</b> « Corrigé des variations saisonnières » signifie que les variations prévisibles, comme les arrêts d'usine en été, sont lissées pour que les vrais changements ressortent. La baisse a commencé début 2024, s'est poursuivie en 2025 et s'est inversée en 2026. La courbe seule ne peut pas dire <em>pourquoi</em> : il faut pour cela des recherches plus poussées.
+        <span class="src">Source : Bureau of Labor Statistics via FRED (MANEMP)</span></figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Les causes sont débattues. Certains économistes estiment que l'emploi industriel suit la demande et l'économie dans leur ensemble, pas les droits de douane. Les partisans des droits mettent en avant des gains dans la métallurgie et la fabrication de matériel de transport. Et il y a une tendance plus profonde : à la mi-2026, la production des usines augmentait alors même que les effectifs ne suivaient pas. Les usines modernes produisent plus avec moins de monde. Autrement dit, « faire revenir l'industrie » et « faire revenir les <em>emplois</em> industriels » ne sont peut-être pas le même objectif, ce qui mériterait un article à part entière.</p>
+      <p>Construire une usine prend des années, pas des mois. Si les droits de douane ou les incitations fiscales de 2025 en faveur de l'investissement national fonctionnent, une grande partie des preuves n'apparaîtra pas avant 2027, voire plus tard.</p>
+
+      <div class="aside">
+        <p><strong>Une leçon sur les données : les chiffres sont révisés.</strong> Quand j'ai commencé mes recherches, la presse indiquait que les usines avaient perdu 89 000 emplois depuis avril 2025 et se trouvaient 62 000 en dessous de janvier 2025. Les données actuelles du Bureau of Labor Statistics montrent des pertes plus faibles (79 000 et 35 000). Personne n'a menti. Le BLS révise ses estimations à mesure que de meilleures données d'enquête arrivent, notamment lors de sa révision annuelle de référence. Utilisez toujours les données les plus récentes, et précisez quand vous les avez récupérées.</p>
+      </div>
+
+      <!-- ===================== OPTIMISME ===================== -->
+      <h2 id="hopeful-fr">Pourquoi je reste optimiste</h2>
+      <p>Pas parce que tout cela est parfait. Je suis optimiste à cause de ce que j'ai découvert en essayant de comprendre.</p>
+      <p><strong>L'économie est lisible.</strong> Quelques mois après les droits de douane de 2025, des chercheurs avaient passé au crible des dizaines de millions de déclarations d'envoi et estimé qui avait payé. En un an, la Fed pouvait estimer l'effet des droits sur l'inflation, presque à la décimale près. Nous ne volons pas à l'aveugle, et n'importe qui avec une connexion Internet peut consulter les données que j'ai utilisées pour chaque graphique de cette page.</p>
+      <p><strong>Les désaccords portent sur les outils, pas sur les objectifs.</strong> Hamilton, Navarro et les économistes qui les critiquent veulent tous un pays fort et sûr, qui fabrique des choses. Ils ne sont pas d'accord sur ce qui permet d'y arriver : les droits de douane, les subventions ou autre chose. C'est un débat qu'on peut vraiment mener avec des preuves.</p>
+      <p><strong>Les chocs de prix s'estompent.</strong> Un droit de douane augmente surtout les prix une seule fois. Il n'installe pas une inflation permanente, et la Fed le sait.</p>
+      <p><strong>Les règles ont tenu.</strong> Les tribunaux ont statué, les lois avaient des échéances, les échéances ont été respectées, et l'argent est revenu à ceux à qui il était dû. Quoi qu'on pense du résultat, le processus a fonctionné comme prévu.</p>
+      <p><strong>Comprendre remplace la peur.</strong> Les « droits de douane » me semblaient être un simple levier. En réalité, ils sont liés au prix de mes courses, à la force du dollar, à une crise de l'or en 1971 et à un débat de 1791. Ce n'est pas déprimant. C'est l'un des systèmes les plus fascinants que j'aie jamais observés, et je vais continuer à l'étudier.</p>
+
+      <!-- ===================== QUESTIONS OUVERTES ===================== -->
+      <h2 id="open-questions-fr">Ce que je ne sais toujours pas</h2>
+      <ul>
+        <li>Pourquoi les exportateurs étrangers n'ont-ils pas baissé davantage leurs prix ? Je comprends la théorie, mais pas les détails propres à chaque secteur.</li>
+        <li>L'argument moderne de Triffin est-il juste ? Les avis sont partagés, et il me faudrait bien mieux comprendre les flux de capitaux pour en juger.</li>
+        <li>Les incitations à l'investissement et les droits de douane se traduiront-ils par de nouvelles usines d'ici 2028 ? Personne ne le sait encore.</li>
+        <li>Que deviendra la politique douanière à mesure que les affaires liées à la section 301 passeront devant les tribunaux ?</li>
+      </ul>
+      <p><strong>Ce que je lis ensuite :</strong> <em>Clashing over Commerce</em> de Douglas Irwin, l'ouvrage de référence sur l'histoire de la politique commerciale américaine, et le véritable <em>Rapport sur les manufactures</em> de Hamilton, disponible gratuitement sur <a href="https://founders.archives.gov/">Founders Online</a>.</p>
+
+      <!-- ===================== SOURCES ===================== -->
+      <h2 id="sources-fr">Sources</h2>
+      <p class="notice">Données des graphiques récupérées sur FRED (Banque fédérale de réserve de Saint-Louis) le 18 novembre 2026. Les sources ci-dessous sont en anglais.</p>
+      <ul class="sources-list">
+        <li>Federal Reserve, <a href="https://www.federalreserve.gov/econres/notes/feds-notes/detecting-tariff-effects-on-consumer-prices-in-real-time-part-ii-20260408.html">Detecting Tariff Effects on Consumer Prices in Real Time, Part II</a> (Apr 2026)</li>
+        <li>Dallas Fed, <a href="https://www.dallasfed.org/research/economics/2026/0505-mau">Effects of realized tariff changes on PCE prices</a> (May 2026)</li>
+        <li>Boston Fed, <a href="https://www.bostonfed.org/-/media/Documents/Workingpapers/PDF/2026/CPP2607.pdf">tariffs, productivity, and core inflation</a> (2026)</li>
+        <li>PIIE, <a href="https://www.piie.com/blogs/realtime-economics/2026/who-pays-tariffs-insights-recent-research">Who pays for tariffs? Insights from recent research</a> (2026)</li>
+        <li>Tax Foundation, <a href="https://taxfoundation.org/blog/exporters-bore-higher-share-2025-tariffs-than-previously-estimated/">on Caroline Freund's estimate</a> (2026)</li>
+        <li>Yale Budget Lab, <a href="https://budgetlab.yale.edu/topic/trade">State of U.S. Tariffs reports and open data</a></li>
+        <li>Bloomberg, <a href="https://www.bloomberg.com/news/articles/2025-06-30/dollar-index-slumps-10-8-in-biggest-first-half-loss-since-1973-mcjmj1mo">Dollar index's biggest first-half loss since 1973</a> (Jun 2025)</li>
+        <li>S&amp;P Global, <a href="https://www.spglobal.com/market-intelligence/en/news-insights/articles/2025/7/us-dollar-shows-few-signs-of-rallying-after-worst-6month-stretch-in-decades-91359418">The dollar after its worst six months in decades</a> (Jul 2025)</li>
+        <li>Douglas Irwin, <a href="https://www.nber.org/papers/w9943">The Aftermath of Hamilton's "Report on Manufactures"</a> (NBER)</li>
+        <li>VoxEU, <a href="https://cepr.org/voxeu/columns/not-triffin-not-miran-rethinking-us-external-imbalances-new-monetary-order">Not Triffin, not Miran</a></li>
+        <li>Council on Foreign Relations, <a href="https://www.cfr.org/articles/after-the-supreme-court-ruling-what-is-next-for-trumps-tariffs">After the Supreme Court ruling</a> (Feb 2026)</li>
+        <li>American Bar Association, <a href="https://www.americanbar.org/groups/public_contract_law/resources/procurement-lawyer/2026-fall/ieepa-tariffs-struck-down-replacement-tariffs-expired/">IEEPA tariffs struck down, replacement tariffs expired</a> (Fall 2026)</li>
+        <li>FRED series: <a href="https://fred.stlouisfed.org/series/MANEMP">MANEMP</a>, <a href="https://fred.stlouisfed.org/series/DTWEXBGS">DTWEXBGS</a>, <a href="https://fred.stlouisfed.org/series/PCEPILFE">PCEPILFE</a>, <a href="https://fred.stlouisfed.org/series/B235RC1Q027SBEA">B235RC1Q027SBEA</a></li>
+      </ul>
+    </div>
+    </div>
+    </div>
   </main>
 
   <!-- The click-to-enlarge viewer. Empty until a figure is clicked. -->
@@ -514,8 +960,8 @@
     </div>
   </footer>
 
-  <script src="tariffs-data.js?v=2026-11-19b"></script>
-  <script src="charts.js?v=2026-11-19b"></script>
-  <script src="site.js?v=2026-11-19b"></script>
+  <script src="tariffs-data.js?v=2026-11-21a"></script>
+  <script src="charts.js?v=2026-11-21a"></script>
+  <script src="site.js?v=2026-11-21a"></script>
 </body>
 </html>

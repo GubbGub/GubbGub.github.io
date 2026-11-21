@@ -42,7 +42,40 @@ document.querySelectorAll(".lang-toggle").forEach(function (button) {
 
     button.setAttribute("aria-pressed", String(!showingFrench));
     button.textContent = showingFrench ? "Lire en français" : "Read in English";
+
+    // Whole-page toggles (like the tariffs article) also switch the page's language,
+    // tab title, and nav links, then jump back to the top of the article.
+    // LEARN: data-* attributes let the HTML hold the settings, so this code stays generic.
+    if (button.dataset.page !== undefined) {
+      var french = !showingFrench;
+      document.documentElement.lang = french ? "fr" : "en";
+      if (button.dataset.titleFr) document.title = french ? button.dataset.titleFr : button.dataset.titleEn;
+      document.querySelectorAll("[data-fr-href]").forEach(function (link) {
+        if (!link.dataset.enHref) link.dataset.enHref = link.getAttribute("href");
+        link.setAttribute("href", french ? link.dataset.frHref : link.dataset.enHref);
+      });
+      // Remember the choice in the address bar (#fr), so a shared link opens in French.
+      if (history.replaceState) history.replaceState(null, "", french ? "#fr" : location.pathname);
+      if (!button.dataset.quiet) button.scrollIntoView({ block: "start" });
+    }
   });
+
+  // Open in French straight away if the link asks for it (#fr, or a French section like #sources-fr).
+  if (button.dataset.page !== undefined && /^#(fr|.+-fr)$/.test(location.hash)) {
+    var hash = location.hash;
+    button.dataset.quiet = "1";
+    button.click();
+    delete button.dataset.quiet;
+    if (hash !== "#fr") {
+      history.replaceState(null, "", hash);
+      var target = document.getElementById(hash.slice(1));
+      if (target) {
+        // "instant" skips the smooth glide, which can land short while pictures above are still loading.
+        target.scrollIntoView({ behavior: "instant" });
+        window.addEventListener("load", function () { target.scrollIntoView({ behavior: "instant" }); });
+      }
+    }
+  }
 });
   
 
@@ -60,7 +93,7 @@ document.querySelectorAll("a[href]").forEach(function (link) {
       // A hidden note for screen readers, so the new tab isn't a surprise.
       var note = document.createElement("span");
       note.className = "new-tab";
-      note.textContent = " (opens in a new tab)";
+      note.textContent = link.closest('[lang="fr"]') ? " (s\u2019ouvre dans un nouvel onglet)" : " (opens in a new tab)";
       link.appendChild(note);
     }
   }
