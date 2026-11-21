@@ -37,7 +37,7 @@
       (m.tribute ? ";--tribute:" + esc(m.tribute) : "") + '"';
   }
 
-  // LEARN: a "tribute" month gets an extra class. style.css turns those cards solid red with white text.
+  // LEARN: a "tribute" month gets an extra class on its Portrait card. style.css turns the photo column into a red stripe.
   function tributeClass(m) { return m.tribute ? " tribute" : ""; }
 
   function fieldNotes(m) {
@@ -48,7 +48,7 @@
       : '<div class="figure" role="img" aria-label="Placeholder for the ' + esc(a.english) + ' drawing">your drawing goes here</div>';
 
     return '' +
-      '<article class="card field-notes monthly' + tributeClass(m) + '" ' + accentStyle(m) + '>' +
+      '<article class="card field-notes monthly" ' + accentStyle(m) + '>' +
         '<div class="fn-head">' +
           '<div class="fn-art">' + art + '</div>' +
           '<div class="fn-title">' +

@@ -523,23 +523,17 @@ footer a { color: var(--ink-2); }
 .pt-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); }
 .pt-photo img.logo { aspect-ratio: auto; width: 62%; margin: 4px auto; object-fit: contain; border: none; border-radius: 0; }
 
-/* LEARN: TRIBUTE CARDS. Every color on the site comes from CSS variables like --ink and --line.
-   Variables are inherited, so redefining them on one element recolors everything inside it.
-   That's how one class turns a whole card red with white text, in light and dark mode alike. */
-.card.tribute {
+/* LEARN: TRIBUTE ("blood stripe"). On a Marine's dress blue trousers, a scarlet stripe runs down
+   the outside seam. Here the photo column becomes that stripe: a red band running the full height
+   of the card, with a sliver of the normal card left showing on its right.
+   The negative margins pull the band out through the card's padding to its top and bottom edges. */
+.portrait.tribute { overflow: hidden; }
+.portrait.tribute .pt-photo {
+  align-self: stretch;
   background: var(--tribute);
-  border-color: var(--tribute);
-  color: var(--ink);    /* text that just inherits its color (headings, paragraphs) turns white too */
-  --ink: #FFFFFF;
-  --ink-2: rgba(255, 255, 255, .90);
-  --ink-3: rgba(255, 255, 255, .74);
-  --line: rgba(255, 255, 255, .24);
-  --accent: #FFFFFF;
+  margin: -36px -22px -36px 0;   /* top, right, bottom, left; the card's padding is 36px 40px */
+  padding: 36px 22px;
 }
-/* The month's accent color would be red on red, so tribute cards use white instead.
-   The longer selector is needed to beat the dark-mode rule for .monthly. */
-.monthly.tribute, :root[data-theme="dark"] .monthly.tribute { --month: #FFFFFF; }
-.tribute .sources a { text-decoration-color: rgba(255, 255, 255, .45); }
 .tribute .pt-photo img:not(.logo) { border-color: rgba(255, 255, 255, .3); }
 
 /* ================================================================
@@ -615,6 +609,8 @@ footer a { color: var(--ink-2); }
   .pt-photo:has(img + img) { flex-direction: row; align-items: center; gap: 12px; }
   .pt-photo:has(img + img) img { flex: 1; min-width: 0; aspect-ratio: 4 / 5; }
   .pt-photo:has(img + img) img.logo { flex: 0.8; aspect-ratio: auto; width: auto; margin: 0; }
+  /* On phones the stripe turns into a red band across the top of the card. */
+  .portrait.tribute .pt-photo { margin: -24px -24px 0; padding: 18px; }
 }
 @media (max-width: 860px) {
   .fn-art img { aspect-ratio: 1 / 1; width: 100%; max-width: 360px; height: auto; margin: 0 auto; display: block; object-fit: contain; }

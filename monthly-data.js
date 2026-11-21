@@ -22,7 +22,7 @@
     photo   true for a real photo (pixel art is drawn crisp; photos are drawn smooth)
     imageFocus  which part of a cropped photo stays in view, like "70% 40%"
     person.image  adds a photo beside the Portrait (person.images adds several, stacked)
-    tribute  a background color that turns the month's cards solid, with white text
+    tribute  a color for a "blood stripe" behind the Portrait photos
 
   accent: the month's color, taken from the animal. "light" is used on the light theme,
   "dark" on the dark theme (it needs to be brighter to show up on black).
@@ -33,7 +33,7 @@ window.MONTHLY = [
     id: "2026-11",
     label: "November 2026",
     accent: { light: "#A50016", dark: "#F2848C" },   // Marine Corps scarlet, for the Corps' birthday (Nov 10)
-    // LEARN: "tribute" turns this month's two cards solid red with white text. Leave it out for normal cards.
+    // LEARN: "tribute" puts the Portrait photos on a red "blood stripe" in this color. Leave it out for normal cards.
     tribute: "#A50016",
 
     animal: {
