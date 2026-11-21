@@ -50,8 +50,10 @@
           '<div class="fn-title">' +
             '<span class="tag">' + esc(a.kicker || "Field notes") + ' · ' + esc(m.label) + '</span>' +
             '<p class="specimen">Specimen ' + String(a.number).padStart(2, "0") + '</p>' +
-            '<h3 lang="fr">' + esc(a.french) + '</h3>' +
-            '<p class="fn-names"><em>' + esc(a.scientific) + '</em> · ' + esc(a.english) + (a.nickname ? ', ' + esc(a.nickname) : '') + '</p>' +
+            // LEARN: the English name is the headline most visitors can read; the French name
+            // sits on the smaller line below. lang="fr" still tells screen readers to say it in French.
+            '<h3>' + esc(a.english) + '</h3>' +
+            '<p class="fn-names"><span lang="fr">' + esc(a.french) + '</span> · <em>' + esc(a.scientific) + '</em>' + (a.nickname ? ' · ' + esc(a.nickname) : '') + '</p>' +
             '<p class="fn-status">' + esc(a.status) + '</p>' +
           '</div>' +
         '</div>' +
@@ -118,8 +120,8 @@
       '<article class="card archive-month monthly" id="' + esc(m.id) + '" ' + accentStyle(m) + '>' +
         '<h2>' + esc(m.label) + '</h2>' +
         '<div class="archive-grid">' +
-          '<div><span class="tag">' + esc(a.kicker || "Field notes") + '</span><h3 lang="fr">' + esc(a.french) + '</h3>' +
-            '<p><em>' + esc(a.scientific) + '</em> · ' + esc(a.english) + '</p>' +
+          '<div><span class="tag">' + esc(a.kicker || "Field notes") + '</span><h3>' + esc(a.english) + '</h3>' +
+            '<p><span lang="fr">' + esc(a.french) + '</span> · <em>' + esc(a.scientific) + '</em></p>' +
             '<p class="archive-q">' + esc(a.question) + '</p></div>' +
           '<div><span class="tag">' + esc(p.kicker || "Portrait") + '</span><h3>' + esc(p.name) + '</h3>' +
             '<p>' + esc(p.years) + ' · ' + esc(p.role) + '</p>' +
