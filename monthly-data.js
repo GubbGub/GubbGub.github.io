@@ -58,7 +58,7 @@ window.MONTHLY = [
         ]]
       ],
 
-      question: "[Open question about the bulldog]",
+      question: "Bulldogs were bred to look tough, but their short snouts make it hard to cool down by panting. How does a mascot built for grit get through summer parades in a dress blue coat?",
 
       vocab: [
         ["le bouledogue anglais", "the English Bulldog (masculine)"],
