@@ -33,8 +33,6 @@ window.MONTHLY = [
     id: "2026-11",
     label: "November 2026",
     accent: { light: "#A50016", dark: "#F2848C" },   // Marine Corps scarlet, for the Corps' birthday (Nov 10)
-    // LEARN: "tribute" puts the Portrait photos on a red "blood stripe" in this color. Leave it out for normal cards.
-    tribute: "#A50016",
 
     animal: {
       kicker: "Animal of the Month",
@@ -94,7 +92,7 @@ window.MONTHLY = [
       // logo: true shows the whole image with no crop or frame.
       images: [
         { src: "images/al-gray-official.jpg", alt: "Official portrait of General Alfred M. Gray Jr. in his service uniform, with the U.S. and Marine Corps flags behind him.", focus: "50% 25%" },
-        { src: "images/usmc-ega.png", alt: "The Marine Corps eagle, globe and anchor.", logo: true },
+        { src: "images/usmc-ega.png", alt: "The Marine Corps eagle, globe and anchor in scarlet.", logo: true },
         { src: "images/al-gray.jpg", alt: "General Alfred M. Gray Jr. in his camouflage utility uniform.", focus: "54% 35%" }
       ],
 
