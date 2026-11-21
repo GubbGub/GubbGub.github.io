@@ -47,16 +47,15 @@
         '<div class="fn-head">' +
           '<div class="fn-art">' + art + '</div>' +
           '<div class="fn-title">' +
-            '<span class="tag">Field notes · ' + esc(m.label) + '</span>' +
+            '<span class="tag">' + esc(a.kicker || "Field notes") + ' · ' + esc(m.label) + '</span>' +
             '<p class="specimen">Specimen ' + String(a.number).padStart(2, "0") + '</p>' +
             '<h3 lang="fr">' + esc(a.french) + '</h3>' +
-            '<p class="fn-names"><em>' + esc(a.scientific) + '</em> · ' + esc(a.english) + ', ' + esc(a.nickname) + '</p>' +
+            '<p class="fn-names"><em>' + esc(a.scientific) + '</em> · ' + esc(a.english) + (a.nickname ? ', ' + esc(a.nickname) : '') + '</p>' +
             '<p class="fn-status">' + esc(a.status) + '</p>' +
           '</div>' +
         '</div>' +
         '<div class="fn-cols">' +
-          '<section><h4 class="tag">Biology</h4>' + list(a.biology) + '</section>' +
-          '<section><h4 class="tag">Behavior &amp; research</h4>' + list(a.behavior) + '</section>' +
+          columns(a) +
           '<section lang="fr"><h4 class="tag">Langue</h4>' +
             '<dl class="vocab">' + a.vocab.map(function (v) {
               return '<div><dt>' + esc(v[0]) + '</dt><dd lang="en">' + esc(v[1]) + '</dd></div>';
@@ -69,17 +68,33 @@
       '</article>';
   }
 
+  // LEARN: if a month has its own "notes", use those headings; otherwise use the standard ones.
+  // Same HTML and classes either way, so the layout doesn't change.
+  function columns(a) {
+    var cols = a.notes || [["Biology", a.biology], ["Behavior & research", a.behavior]];
+    return cols.map(function (c) {
+      return '<section><h4 class="tag">' + esc(c[0]) + '</h4>' + list(c[1]) + '</section>';
+    }).join("");
+  }
+
+  function note(heading, text) {
+    return '<dl class="note"><dt class="tag">' + esc(heading) + '</dt><dd>' + esc(text) + '</dd></dl>';
+  }
+
   function portrait(m) {
     var p = m.person;
+    var notes = p.notes || [
+      ["The big idea", p.figured],
+      ["Before that", p.before],
+      ["Why the name isn't famous", p.unknown],
+      ["Where it shows up in my work", p.mine]
+    ];
     return '' +
       '<article class="card portrait">' +
-        '<span class="tag">Portrait · ' + esc(m.label) + '</span>' +
+        '<span class="tag">' + esc(p.kicker || "Portrait") + ' · ' + esc(m.label) + '</span>' +
         '<h3>' + esc(p.name) + '</h3>' +
         '<p class="pt-meta">' + esc(p.years) + ' · ' + esc(p.role) + '</p>' +
-        '<dl class="note"><dt class="tag">The big idea</dt><dd>' + esc(p.figured) + '</dd></dl>' +
-        '<dl class="note"><dt class="tag">Before that</dt><dd>' + esc(p.before) + '</dd></dl>' +
-        '<dl class="note"><dt class="tag">Why the name isn\'t famous</dt><dd>' + esc(p.unknown) + '</dd></dl>' +
-        '<dl class="note"><dt class="tag">Where it shows up in my work</dt><dd>' + esc(p.mine) + '</dd></dl>' +
+        notes.map(function (n) { return note(n[0], n[1]); }).join("") +
         sources(p.sources) +
       '</article>';
   }
@@ -91,12 +106,12 @@
       '<article class="card archive-month monthly" id="' + esc(m.id) + '" ' + accentStyle(m) + '>' +
         '<h2>' + esc(m.label) + '</h2>' +
         '<div class="archive-grid">' +
-          '<div><span class="tag">Field notes</span><h3 lang="fr">' + esc(a.french) + '</h3>' +
+          '<div><span class="tag">' + esc(a.kicker || "Field notes") + '</span><h3 lang="fr">' + esc(a.french) + '</h3>' +
             '<p><em>' + esc(a.scientific) + '</em> · ' + esc(a.english) + '</p>' +
             '<p class="archive-q">' + esc(a.question) + '</p></div>' +
-          '<div><span class="tag">Portrait</span><h3>' + esc(p.name) + '</h3>' +
+          '<div><span class="tag">' + esc(p.kicker || "Portrait") + '</span><h3>' + esc(p.name) + '</h3>' +
             '<p>' + esc(p.years) + ' · ' + esc(p.role) + '</p>' +
-            '<p class="archive-q">' + esc(p.figured) + '</p></div>' +
+            '<p class="archive-q">' + esc(p.figured || (p.notes && p.notes[1][1]) || "") + '</p></div>' +
         '</div>' +
         '<details><summary>Read the full notes</summary>' + fieldNotes(m) + portrait(m) + '</details>' +
       '</article>';
@@ -110,5 +125,25 @@
     if (fn) fn.innerHTML = fieldNotes(months[0]);
     if (pt) pt.innerHTML = portrait(months[0]);
     if (ar) ar.innerHTML = months.map(archiveCard).join("");
+
+    // Mot de la semaine on the homepage comes from the newest month too.
+    var w = months[0].animal.word;
+    var wfr = document.getElementById("word-fr"), wen = document.getElementById("word-en");
+    if (w && wfr && wen) { wfr.textContent = w.fr; wen.textContent = w.en; }
   }
+
+  // LEARN: if a drawing isn't uploaded yet, swap the broken image for the dashed
+  // "your drawing goes here" box instead of showing a broken-image icon.
+  document.querySelectorAll(".fn-art img").forEach(function (img) {
+    function fallback() {
+      var box = document.createElement("div");
+      box.className = "figure";
+      box.setAttribute("role", "img");
+      box.setAttribute("aria-label", img.alt);
+      box.textContent = "your drawing goes here";
+      img.replaceWith(box);
+    }
+    if (img.complete && img.naturalWidth === 0) fallback();
+    else img.addEventListener("error", fallback);
+  });
 })();

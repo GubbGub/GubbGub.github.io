@@ -15,11 +15,89 @@
   LEARN: why a .js file and not .json? Browsers won't load .json files when you open the
   page by double-clicking (file://). A .js file loads either way, so preview still works.
 
+  OPTIONAL FIELDS (leave them out and the card looks like October's):
+    kicker  replaces the small label ("Field notes" / "Portrait")
+    notes   replaces the fixed headings with your own (see November for the shape)
+    word    the homepage's "Mot de la semaine"
+
   accent: the month's color, taken from the animal. "light" is used on the light theme,
   "dark" on the dark theme (it needs to be brighter to show up on black).
 */
 
 window.MONTHLY = [
+  {
+    id: "2026-11",
+    label: "November 2026",
+    accent: { light: "#A6192E", dark: "#F2848C" },   // Marine Corps scarlet, for the Corps' birthday (Nov 10)
+
+    animal: {
+      kicker: "Animal of the Month",
+      number: 2,
+      french: "Le bouledogue anglais",
+      english: "The English Bulldog (USMC Mascot)",
+      scientific: "Canis familiaris",
+      status: "Chesty & The Devil Dogs",
+      image: "images/bulldog.png",
+      imageAlt: "An English Bulldog in a Marine Corps dress blue mascot coat.",
+
+      // LEARN: "notes" swaps the usual Biology / Behavior columns for two columns with
+      // their own headings. Each entry is [heading, [paragraphs]].
+      notes: [
+        ["Origin", [
+          "No Marine Corps tribute is complete without the iconic English Bulldog. Born out of World War I lore—where German soldiers reportedly nicknamed relentless U.S. Marines 'Teufelshunde' (Devil Dogs)—the English Bulldog officially became the Corps' mascot in 1922."
+        ]],
+        ["The mascots", [
+          "Famous mascots like Sgt. Maj. Jiggs and the legendary 'Chesty' lineage (named after Lt. Gen. Lewis 'Chesty' Puller) have represented grit, stubbornness, and loyalty for over a century.",
+          "Tough, stocky, and impossible to push around, the bulldog embodies the exact no-nonsense mindset General Gray fought to keep alive."
+        ]]
+      ],
+
+      question: "[Open question about the bulldog]",
+
+      vocab: [
+        ["le bouledogue anglais", "the English Bulldog (masculine)"],
+        ["la mascotte", "mascot"],
+        ["le chien du diable", "devil dog"],
+        ["têtu", "stubborn"],
+        ["fidèle", "loyal, faithful"],
+        ["le Corps des Marines", "the Marine Corps"]
+      ],
+      sentence: {
+        fr: "Le bouledogue anglais est têtu, mais toujours fidèle.",
+        en: "The English Bulldog is stubborn, but always faithful."
+      },
+      // LEARN: the homepage's "Mot de la semaine" box reads these two lines.
+      word: { fr: "le bouledogue anglais", en: "English Bulldog" },
+
+      sources: [
+        ["DVIDS, \"The birth of the Marine Corps mascot\"", "https://www.dvidshub.net/news/84547/birth-marine-corps-mascot"],
+        ["MCRD San Diego, \"Bulldog mascots in the Marine Corps\"", "https://www.mcrdsd.marines.mil/About/MCRD-San-Diego-Mascot/"]
+      ]
+    },
+
+    person: {
+      kicker: "Person of the Month",
+      name: "General Alfred M. \"Al\" Gray Jr.",
+      years: "1928–2024",
+      role: "29th Commandant of the Marine Corps | \"The Enlisted Marines' Commandant\"",
+      // The Portrait card has no image slot yet; this is saved for when it does.
+      image: "images/al-gray.jpg",
+      imageAlt: "General Alfred M. Gray Jr. in his camouflage utility uniform.",
+
+      // LEARN: "notes" swaps the four usual Portrait headings for your own. [heading, text].
+      notes: [
+        ["Why I looked him up", "I started digging into military history this month because I wanted to understand what great strategy actually looks like in the real world—and that search led me straight to General Alfred M. Gray Jr."],
+        ["From private to Commandant", "Dropping out of college during the Korean War in 1950 to enlist as a private, Gray worked his way all the way up to four-star general and became the 29th Commandant of the Marine Corps in 1987."],
+        ["Every Marine a rifleman", "Known as 'the Enlisted Marines' Commandant,' he famously took his official Pentagon portrait in camouflage utilities instead of dress blues and institutionalized the mantra: 'Every Marine is, first and foremost, a rifleman.' To back it up, he created Marine Combat Training (MCT) so even Marines working behind a desk learn field tactics and survival before touching their primary job."],
+        ["What I'm taking from it", "You don't have to be a Marine—or a future one—to live by what Gray stood for: great strategy isn't about fancy titles or sitting in an ivory tower. It's about making sure nobody on your team is above the fundamentals, preparing everyone for when things go sideways, and leading from the front no matter how high you climb."]
+      ],
+
+      sources: [
+        ["Marines.mil, \"Marines mourn the loss of Corps legend and 29th Commandant, General Alfred Gray\" (2024)", "https://www.marines.mil/News/News-Display/Article/3720707/marines-mourn-the-loss-of-corps-legend-and-29th-commandant-general-alfred-gray/"],
+        ["Marine Corps History Division, \"General Alfred M. Gray Jr.\"", "https://www.usmcu.edu/Research/Marine-Corps-History-Division/People/Whos-Who-in-Marine-Corps-History/Gagnon-Ingram/General-Alfred-M-Gray-Jr/"]
+      ]
+    }
+  },
   {
     id: "2026-10",
     label: "October 2026",
