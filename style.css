@@ -515,6 +515,13 @@ footer a { color: var(--ink-2); }
 .pt-meta { margin: 0 0 24px; color: var(--ink-3); }
 .portrait .note { max-width: 680px; }
 
+/* LEARN: when a Portrait has a photo, the card turns into a two-column grid:
+   text on the left, a fixed-width photo on the right. minmax(0, 1fr) lets the
+   text column shrink instead of pushing the photo off the card. */
+.portrait.has-photo { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: start; }
+.pt-photo { margin: 0; }
+.pt-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); }
+
 /* ================================================================
    PRINCIPLES
    ================================================================ */
@@ -575,6 +582,16 @@ footer a { color: var(--ink-2); }
    .fn-art img { image-rendering: pixelated; }
 
 /* LEARN: on phones the card stacks, so show the art as a full square instead of cropping it to a wide strip. */
+/* LEARN: photos (class="photo") are not pixel art, so they get normal smooth scaling.
+   On phones they show as a wide 16:9 strip, cropped around imageFocus. */
+.fn-art img.photo { image-rendering: auto; }
+@media (max-width: 860px) {
+  .fn-art img.photo { aspect-ratio: 16 / 9; max-width: none; object-fit: cover; }
+  /* On phones the Portrait photo moves above the text as a wide strip. */
+  .portrait.has-photo { grid-template-columns: 1fr; gap: 24px; }
+  .pt-photo { order: -1; }
+  .pt-photo img { aspect-ratio: 16 / 10; }
+}
 @media (max-width: 860px) {
   .fn-art img { aspect-ratio: 1 / 1; width: 100%; max-width: 360px; height: auto; margin: 0 auto; display: block; object-fit: contain; }
 }

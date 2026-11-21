@@ -19,6 +19,9 @@
     kicker  replaces the small label ("Field notes" / "Portrait")
     notes   replaces the fixed headings with your own (see November for the shape)
     word    the homepage's "Mot de la semaine"
+    photo   true for a real photo (pixel art is drawn crisp; photos are drawn smooth)
+    imageFocus  which part of a cropped photo stays in view, like "70% 40%"
+    person.image  adds a photo beside the Portrait
 
   accent: the month's color, taken from the animal. "light" is used on the light theme,
   "dark" on the dark theme (it needs to be brighter to show up on black).
@@ -37,8 +40,10 @@ window.MONTHLY = [
       english: "The English Bulldog (USMC Mascot)",
       scientific: "Canis familiaris",
       status: "Chesty & The Devil Dogs",
-      image: "images/bulldog.png",
+      image: "images/bulldog.jpg",
       imageAlt: "An English Bulldog in a Marine Corps dress blue mascot coat.",
+      photo: true,              // a real photo, not pixel art (keeps it smooth instead of pixelated)
+      imageFocus: "72% 45%",    // which part of the photo stays in view when it's cropped (x% y%)
 
       // LEARN: "notes" swaps the usual Biology / Behavior columns for two columns with
       // their own headings. Each entry is [heading, [paragraphs]].
@@ -71,7 +76,8 @@ window.MONTHLY = [
 
       sources: [
         ["DVIDS, \"The birth of the Marine Corps mascot\"", "https://www.dvidshub.net/news/84547/birth-marine-corps-mascot"],
-        ["MCRD San Diego, \"Bulldog mascots in the Marine Corps\"", "https://www.mcrdsd.marines.mil/About/MCRD-San-Diego-Mascot/"]
+        ["MCRD San Diego, \"Bulldog mascots in the Marine Corps\"", "https://www.mcrdsd.marines.mil/About/MCRD-San-Diego-Mascot/"],
+        ["Photo via Military.com", "https://www.military.com/history/marine-corps-mascot-chesty-xvi-gets-promoted-his-way-outranking-you.html"]
       ]
     },
 
@@ -80,9 +86,9 @@ window.MONTHLY = [
       name: "General Alfred M. \"Al\" Gray Jr.",
       years: "1928–2024",
       role: "29th Commandant of the Marine Corps | \"The Enlisted Marines' Commandant\"",
-      // The Portrait card has no image slot yet; this is saved for when it does.
       image: "images/al-gray.jpg",
       imageAlt: "General Alfred M. Gray Jr. in his camouflage utility uniform.",
+      imageFocus: "54% 35%",
 
       // LEARN: "notes" swaps the four usual Portrait headings for your own. [heading, text].
       notes: [
@@ -94,7 +100,8 @@ window.MONTHLY = [
 
       sources: [
         ["Marines.mil, \"Marines mourn the loss of Corps legend and 29th Commandant, General Alfred Gray\" (2024)", "https://www.marines.mil/News/News-Display/Article/3720707/marines-mourn-the-loss-of-corps-legend-and-29th-commandant-general-alfred-gray/"],
-        ["Marine Corps History Division, \"General Alfred M. Gray Jr.\"", "https://www.usmcu.edu/Research/Marine-Corps-History-Division/People/Whos-Who-in-Marine-Corps-History/Gagnon-Ingram/General-Alfred-M-Gray-Jr/"]
+        ["Marine Corps History Division, \"General Alfred M. Gray Jr.\"", "https://www.usmcu.edu/Research/Marine-Corps-History-Division/People/Whos-Who-in-Marine-Corps-History/Gagnon-Ingram/General-Alfred-M-Gray-Jr/"],
+        ["Photo via USNI News", "https://news.usni.org/2024/03/20/gen-al-gray-beloved-marine-29th-usmc-commandant-dies-at-95"]
       ]
     }
   },

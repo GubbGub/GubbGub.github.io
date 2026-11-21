@@ -39,7 +39,8 @@
   function fieldNotes(m) {
     var a = m.animal;
     var art = a.image
-      ? '<img src="' + esc(a.image) + '" alt="' + esc(a.imageAlt) + '">'
+      ? '<img src="' + esc(a.image) + '" alt="' + esc(a.imageAlt) + '"' +
+          (a.photo ? ' class="photo"' : '') + focus(a) + '>'
       : '<div class="figure" role="img" aria-label="Placeholder for the ' + esc(a.english) + ' drawing">your drawing goes here</div>';
 
     return '' +
@@ -77,6 +78,11 @@
     }).join("");
   }
 
+  // LEARN: object-position picks which part of a cropped photo stays visible.
+  function focus(x) {
+    return x.imageFocus ? ' style="object-position:' + esc(x.imageFocus) + '"' : '';
+  }
+
   function note(heading, text) {
     return '<dl class="note"><dt class="tag">' + esc(heading) + '</dt><dd>' + esc(text) + '</dd></dl>';
   }
@@ -89,13 +95,19 @@
       ["Why the name isn't famous", p.unknown],
       ["Where it shows up in my work", p.mine]
     ];
+    // LEARN: with a photo, the card becomes two columns: the text, then a <figure> for the photo.
+    var photo = p.image
+      ? '<figure class="pt-photo"><img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt) + '"' + focus(p) + '></figure>'
+      : '';
     return '' +
-      '<article class="card portrait">' +
+      '<article class="card portrait' + (photo ? ' has-photo' : '') + '">' +
+        (photo ? '<div class="pt-body">' : '') +
         '<span class="tag">' + esc(p.kicker || "Portrait") + ' · ' + esc(m.label) + '</span>' +
         '<h3>' + esc(p.name) + '</h3>' +
         '<p class="pt-meta">' + esc(p.years) + ' · ' + esc(p.role) + '</p>' +
         notes.map(function (n) { return note(n[0], n[1]); }).join("") +
         sources(p.sources) +
+        (photo ? '</div>' + photo : '') +
       '</article>';
   }
 
