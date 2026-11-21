@@ -228,6 +228,7 @@ img { max-width: 100%; display: block; }
   color: var(--ink-2);
   max-width: 36em;
   margin: 0;
+  text-wrap: pretty;    /* LEARN: asks the browser not to leave one lonely word on the last line */
 }
 
 /* "Right now" strip, like the "currently reading" panels on Gates Notes */
