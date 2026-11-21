@@ -27,7 +27,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <!-- LEARN: the styles now live in their own file so every page can share them. -->
-  <link rel="stylesheet" href="style.css?v=2026-11-21f">
+  <link rel="stylesheet" href="style.css?v=2026-11-21g">
   <!-- LEARN: this tiny script runs BEFORE the page draws. It reads the visitor's saved choice
        and applies it right away, so the page never flashes the wrong colors on load.
        If they never chose, it follows their device setting. -->
@@ -275,17 +275,11 @@
           </dl>
           <dl class="note">
             <dt class="tag">My key takeaways</dt>
-            <dd>
-              <ul>
-                <li class="placeholder">[Takeaway one]</li>
-                <li class="placeholder">[Takeaway two]</li>
-                <li class="placeholder">[Takeaway three]</li>
-              </ul>
-            </dd>
+            <dd class="wip">Still reading. I'll write these up when I finish the book.</dd>
           </dl>
           <dl class="note">
             <dt class="tag">Personal intersections</dt>
-            <dd>This book is why I wasn't scared of the circuit board on my counter. Once you've seen a computer built out of relays on paper, a 28-pin chip is just more of the same idea. <span class="placeholder">[Add your own thoughts.]</span></dd>
+            <dd>This book is why I wasn't scared of the circuit board on my counter. Once you've seen a computer built out of relays on paper, a 28-pin chip is just more of the same idea. It also connects straight to Claude Shannon, October's Portrait: the whole book rests on his 1937 idea that switches can do logic.</dd>
           </dl>
         </div>
       </article>
@@ -299,7 +293,7 @@
           <span class="tag">Discipline</span>
           <h3>Can't Hurt Me</h3>
           <p class="byline">Master Your Mind and Defy the Odds · David Goggins</p>
-          <div class="progress"><span>[Reading]</span><span class="bar"><i style="width:40%"></i></span></div>
+          <div class="progress"><span>In progress</span><span class="bar"><i style="width:40%"></i></span></div>
 
           <dl class="note">
             <dt class="tag">Core thesis</dt>
@@ -307,19 +301,68 @@
           </dl>
           <dl class="note">
             <dt class="tag">My key takeaways</dt>
-            <dd>
-              <ul>
-                <li class="placeholder">[Takeaway one]</li>
-                <li class="placeholder">[Takeaway two]</li>
-              </ul>
-            </dd>
+            <dd class="wip">Still reading. I'll write these up when I finish the book.</dd>
           </dl>
           <dl class="note">
             <dt class="tag">Personal intersections</dt>
-            <dd class="placeholder">[Where this showed up for you, for example the last mile of a cross country race or a project that kept failing.]</dd>
+            <dd>Cross country this fall was where I tested it. In the last mile of a race, my mind asked to stop well before my body had to, which is exactly the moment Goggins writes about. Now I'm trying to bring the same idea to the work I'd rather put off.</dd>
           </dl>
         </div>
       </article>
+
+      <!-- LEARN: the "shelf" is a CSS grid of small cards for books I've only just started.
+           Each progress bar's width is set inline (style="width:27%") so it matches how far I am. -->
+      <div class="shelf-head">
+        <h3>Also in progress</h3>
+        <p>I tend to start more books than I can finish at once. These are the rest, from furthest along to not started.</p>
+      </div>
+      <div class="shelf">
+        <article class="card shelf-book">
+          <div class="cover mini stuff" aria-hidden="true"><b>Stuff Matters</b></div>
+          <div>
+            <h4>Stuff Matters</h4>
+            <p class="byline">Mark Miodownik</p>
+            <div class="progress"><span>27%</span><span class="bar"><i style="width:27%"></i></span></div>
+            <p>I was really enjoying this one, so I made myself pause it until I finish the books I started before it.</p>
+          </div>
+        </article>
+        <article class="card shelf-book">
+          <div class="cover mini numbers" aria-hidden="true"><b>A Mind for Numbers</b></div>
+          <div>
+            <h4>A Mind for Numbers</h4>
+            <p class="byline">Barbara Oakley</p>
+            <div class="progress"><span>7%</span><span class="bar"><i style="width:7%"></i></span></div>
+            <p>Picked it up recently. It's a little lower on my list for now.</p>
+          </div>
+        </article>
+        <article class="card shelf-book">
+          <div class="cover mini stockdale" aria-hidden="true"><b>Thoughts of a Philosophical Fighter Pilot</b></div>
+          <div>
+            <h4>Thoughts of a Philosophical Fighter Pilot</h4>
+            <p class="byline">James B. Stockdale</p>
+            <div class="progress"><span>3%</span><span class="bar"><i style="width:3%"></i></span></div>
+            <p>Got it not long ago and haven't had real time to start it yet.</p>
+          </div>
+        </article>
+        <article class="card shelf-book">
+          <div class="cover mini kahneman" aria-hidden="true"><b>Thinking, Fast and Slow</b></div>
+          <div>
+            <h4>Thinking, Fast and Slow</h4>
+            <p class="byline">Daniel Kahneman</p>
+            <div class="progress"><span>2%</span><span class="bar"><i style="width:2%"></i></span></div>
+            <p>One of the densest books I own, so I'm saving it for when I can give it real attention.</p>
+          </div>
+        </article>
+        <article class="card shelf-book">
+          <div class="cover mini grokking" aria-hidden="true"><b>Grokking Algorithms</b></div>
+          <div>
+            <h4>Grokking Algorithms</h4>
+            <p class="byline">Aditya Bhargava</p>
+            <div class="progress"><span>Up next</span><span class="bar"><i style="width:0%"></i></span></div>
+            <p>Haven't started it yet.</p>
+          </div>
+        </article>
+      </div>
     </section>
 
     <!-- ===================== FRENCH ===================== -->

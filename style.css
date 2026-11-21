@@ -373,10 +373,30 @@ img { max-width: 100%; display: block; }
 .note ul { margin: 0; padding-left: 1.1em; }
 .note li + li { margin-top: 6px; }
 .placeholder { color: var(--ink-3); font-style: italic; }
+.note dd.wip { color: var(--ink-3); font-style: italic; font-size: 16px; }   /* "still reading" notes */
 
 .progress { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-3); margin-bottom: 18px; }
 .bar { flex: 1; max-width: 220px; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
 .bar i { display: block; height: 100%; background: var(--ink); }
+
+/* "Also in progress" shelf: small cards in a two-column grid that drops to one column on phones.
+   LEARN: repeat(auto-fit, minmax(320px, 1fr)) means "as many columns as fit, each at least 320px". */
+.shelf-head { margin: 44px 0 16px; }
+.shelf-head h3 { font-family: var(--serif); font-weight: 500; font-size: 24px; margin: 0 0 4px; }
+.shelf-head p { margin: 0; color: var(--ink-2); max-width: 40em; }
+.shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.shelf-book { display: grid; grid-template-columns: 64px 1fr; gap: 20px; padding: 22px; align-items: start; }
+.shelf-book h4 { font-family: var(--serif); font-weight: 500; font-size: 19px; line-height: 1.25; margin: 0 0 2px; }
+.shelf-book .byline { color: var(--ink-3); font-size: 14px; margin: 0 0 10px; }
+.shelf-book .progress { margin-bottom: 10px; }
+.shelf-book p:last-child { margin: 0; font-size: 15px; color: var(--ink-2); line-height: 1.55; }
+.cover.mini { padding: 7px 6px; border-radius: 2px 6px 6px 2px; box-shadow: inset 3px 0 0 rgba(0,0,0,.18), 0 4px 10px rgba(0,0,0,.12); }
+.cover.mini b { font-size: 9px; line-height: 1.2; }
+.cover.stuff { background: #3E6B6A; }
+.cover.numbers { background: #C0553A; }
+.cover.stockdale { background: #4A5560; }
+.cover.kahneman { background: #D9B44A; color: #1D1D1F; }
+.cover.grokking { background: #5B4B8A; }
 
 /* ================================================================
    FRENCH
@@ -435,7 +455,7 @@ footer a { color: var(--ink-2); }
 @media (max-width: 760px) {
   .projects, .french-grid, .athlete { grid-template-columns: 1fr; }
   .book { grid-template-columns: 1fr; gap: 20px; padding: 26px; }
-  .cover { width: 120px; }
+  .cover:not(.mini) { width: 120px; }
   .card { padding: 22px; }
   .log { grid-template-columns: 1fr; gap: 2px; }
   .hero { padding-top: 56px; }
