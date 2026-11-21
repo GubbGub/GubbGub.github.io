@@ -49,7 +49,7 @@ window.MONTHLY = [
       // their own headings. Each entry is [heading, [paragraphs]].
       notes: [
         ["Origin", [
-          "No Marine Corps tribute is complete without the iconic English Bulldog. Born out of World War I lore—where German soldiers reportedly nicknamed relentless U.S. Marines 'Teufelshunde' (Devil Dogs)—the English Bulldog officially became the Corps' mascot in 1922."
+          "No Marine Corps tribute is complete without the iconic English Bulldog. Born out of World War I lore—where German soldiers reportedly nicknamed relentless U.S. Marines 'Teufelshunde' (Devil Dogs)—the English Bulldog became the Corps' mascot in 1922."
         ]],
         ["The mascots", [
           "Famous mascots like Sgt. Maj. Jiggs and the legendary 'Chesty' lineage (named after Lt. Gen. Lewis 'Chesty' Puller) have represented grit, stubbornness, and loyalty for over a century.",
@@ -94,7 +94,7 @@ window.MONTHLY = [
       notes: [
         ["Why I looked him up", "I started digging into military history this month because I wanted to understand what great strategy actually looks like in the real world—and that search led me straight to General Alfred M. Gray Jr."],
         ["From private to Commandant", "Dropping out of college during the Korean War in 1950 to enlist as a private, Gray worked his way all the way up to four-star general and became the 29th Commandant of the Marine Corps in 1987."],
-        ["Every Marine a rifleman", "Known as 'the Enlisted Marines' Commandant,' he famously took his official Pentagon portrait in camouflage utilities instead of dress blues and institutionalized the mantra: 'Every Marine is, first and foremost, a rifleman.' To back it up, he created Marine Combat Training (MCT) so even Marines working behind a desk learn field tactics and survival before touching their primary job."],
+        ["Every Marine a rifleman", "Known as 'the Enlisted Marines' Commandant,' he famously took his official portrait in camouflage utilities instead of dress blues and institutionalized the mantra: 'Every Marine is, first and foremost, a rifleman.' To back it up, he created Marine Combat Training (MCT) so even Marines working behind a desk learn field tactics and survival before touching their primary job."],
         ["What I'm taking from it", "You don't have to be a Marine—or a future one—to live by what Gray stood for: great strategy isn't about fancy titles or sitting in an ivory tower. It's about making sure nobody on your team is above the fundamentals, preparing everyone for when things go sideways, and leading from the front no matter how high you climb."]
       ],
 
@@ -117,9 +117,10 @@ window.MONTHLY = [
       nickname: "the snow monkey",
       scientific: "Macaca fuscata",
       status: "Least Concern on the IUCN Red List",
-      // Replace with your own drawing or pixel art, e.g. image: "images/macaque.png"
-      image: "images/macaque.png",
-      imageAlt: "Drawing of a Japanese macaque",
+      image: "images/macaque.jpg",
+      imageAlt: "A young Japanese macaque grooming an adult's face in a steaming hot spring",
+      photo: true,
+      imageFocus: "50% 45%",
 
       biology: [
         "The northernmost-living monkey on Earth. Some troops spend their winters in the snowy mountains of northern Japan, farther north than any other non-human primate.",
@@ -149,7 +150,8 @@ window.MONTHLY = [
 
       sources: [
         ["Kyoto University, \"Spa therapy helps Japan's snow monkeys cope with the cold\" (2018)", "https://www.kyoto-u.ac.jp/en/research/research_results/2018/180404_1.html"],
-        ["Hirata et al., \"Sweet-potato washing revisited\" (2001)", "https://www.j-monkey.jp/lng/pdf/sweet-potato-washing/Hirata-2001-Sweet-potato-washing-revisited.pdf"]
+        ["Hirata et al., \"Sweet-potato washing revisited\" (2001)", "https://www.j-monkey.jp/lng/pdf/sweet-potato-washing/Hirata-2001-Sweet-potato-washing-revisited.pdf"],
+        ["Photo via Snow Monkey Resorts", "https://www.snowmonkeyresorts.com/tours/1-day-snow-monkey-zenkoji-temple-tour/"]
       ]
     },
 
