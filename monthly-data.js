@@ -21,7 +21,8 @@
     word    the homepage's "Mot de la semaine"
     photo   true for a real photo (pixel art is drawn crisp; photos are drawn smooth)
     imageFocus  which part of a cropped photo stays in view, like "70% 40%"
-    person.image  adds a photo beside the Portrait
+    person.image  adds a photo beside the Portrait (person.images adds several, stacked)
+    tribute  a background color that turns the month's cards solid, with white text
 
   accent: the month's color, taken from the animal. "light" is used on the light theme,
   "dark" on the dark theme (it needs to be brighter to show up on black).
@@ -31,7 +32,9 @@ window.MONTHLY = [
   {
     id: "2026-11",
     label: "November 2026",
-    accent: { light: "#A6192E", dark: "#F2848C" },   // Marine Corps scarlet, for the Corps' birthday (Nov 10)
+    accent: { light: "#A50016", dark: "#F2848C" },   // Marine Corps scarlet, for the Corps' birthday (Nov 10)
+    // LEARN: "tribute" turns this month's two cards solid red with white text. Leave it out for normal cards.
+    tribute: "#A50016",
 
     animal: {
       kicker: "Animal of the Month",
@@ -87,21 +90,26 @@ window.MONTHLY = [
       name: "General Alfred M. \"Al\" Gray Jr.",
       years: "1928–2024",
       role: "29th Commandant of the Marine Corps | \"The Enlisted Marines' Commandant\"",
-      image: "images/al-gray.jpg",
-      imageAlt: "General Alfred M. Gray Jr. in his camouflage utility uniform.",
-      imageFocus: "54% 35%",
+      // LEARN: "images" stacks several pictures in the photo column, top to bottom.
+      // logo: true shows the whole image with no crop or frame.
+      images: [
+        { src: "images/al-gray-official.jpg", alt: "Official portrait of General Alfred M. Gray Jr. in his service uniform, with the U.S. and Marine Corps flags behind him.", focus: "50% 25%" },
+        { src: "images/usmc-ega.png", alt: "The Marine Corps eagle, globe and anchor.", logo: true },
+        { src: "images/al-gray.jpg", alt: "General Alfred M. Gray Jr. in his camouflage utility uniform.", focus: "54% 35%" }
+      ],
 
       // LEARN: "notes" swaps the four usual Portrait headings for your own. [heading, text].
       notes: [
         ["Why I looked him up", "I started digging into military history this month because I wanted to understand what great strategy actually looks like in the real world—and that search led me straight to General Alfred M. Gray Jr."],
         ["From private to Commandant", "Dropping out of college during the Korean War in 1950 to enlist as a private, Gray worked his way all the way up to four-star general and became the 29th Commandant of the Marine Corps in 1987."],
-        ["Every Marine a rifleman", "Known as 'the Enlisted Marines' Commandant,' he famously took his official portrait in camouflage utilities instead of dress blues and institutionalized the mantra: 'Every Marine is, first and foremost, a rifleman.' To back it up, he created Marine Combat Training (MCT) so even Marines working behind a desk learn field tactics and survival before touching their primary job."],
+        ["Every Marine a rifleman", "Known as 'the Enlisted Marines' Commandant,' he famously had an official photograph taken in camouflage utilities instead of dress blues—still the only Commandant to do so—and institutionalized the mantra: 'Every Marine is, first and foremost, a rifleman.' To back it up, he created Marine Combat Training (MCT) so even Marines working behind a desk learn field tactics and survival before touching their primary job."],
         ["What I'm taking from it", "You don't have to be a Marine—or a future one—to live by what Gray stood for: great strategy isn't about fancy titles or sitting in an ivory tower. It's about making sure nobody on your team is above the fundamentals, preparing everyone for when things go sideways, and leading from the front no matter how high you climb."]
       ],
 
       sources: [
         ["Marines.mil, \"Marines mourn the loss of Corps legend and 29th Commandant, General Alfred Gray\" (2024)", "https://www.marines.mil/News/News-Display/Article/3720707/marines-mourn-the-loss-of-corps-legend-and-29th-commandant-general-alfred-gray/"],
         ["Marine Corps History Division, \"General Alfred M. Gray Jr.\"", "https://www.usmcu.edu/Research/Marine-Corps-History-Division/People/Whos-Who-in-Marine-Corps-History/Gagnon-Ingram/General-Alfred-M-Gray-Jr/"],
+        ["Official portrait via the National Archives", "https://catalog.archives.gov/id/6490268"],
         ["Photo via USNI News", "https://news.usni.org/2024/03/20/gen-al-gray-beloved-marine-29th-usmc-commandant-dies-at-95"]
       ]
     }

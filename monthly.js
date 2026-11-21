@@ -33,8 +33,12 @@
 
   // The month's accent color travels as two CSS variables; style.css picks the right one for the theme.
   function accentStyle(m) {
-    return 'style="--month-light:' + esc(m.accent.light) + ";--month-dark:" + esc(m.accent.dark) + '"';
+    return 'style="--month-light:' + esc(m.accent.light) + ";--month-dark:" + esc(m.accent.dark) +
+      (m.tribute ? ";--tribute:" + esc(m.tribute) : "") + '"';
   }
+
+  // LEARN: a "tribute" month gets an extra class. style.css turns those cards solid red with white text.
+  function tributeClass(m) { return m.tribute ? " tribute" : ""; }
 
   function fieldNotes(m) {
     var a = m.animal;
@@ -44,7 +48,7 @@
       : '<div class="figure" role="img" aria-label="Placeholder for the ' + esc(a.english) + ' drawing">your drawing goes here</div>';
 
     return '' +
-      '<article class="card field-notes monthly" ' + accentStyle(m) + '>' +
+      '<article class="card field-notes monthly' + tributeClass(m) + '" ' + accentStyle(m) + '>' +
         '<div class="fn-head">' +
           '<div class="fn-art">' + art + '</div>' +
           '<div class="fn-title">' +
@@ -98,11 +102,15 @@
       ["Where it shows up in my work", p.mine]
     ];
     // LEARN: with a photo, the card becomes two columns: the text, then a <figure> for the photo.
-    var photo = p.image
-      ? '<figure class="pt-photo"><img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt) + '"' + focus(p) + '></figure>'
+    var imgs = p.images || (p.image ? [{ src: p.image, alt: p.imageAlt, focus: p.imageFocus }] : []);
+    var photo = imgs.length
+      ? '<figure class="pt-photo">' + imgs.map(function (im) {
+          return '<img src="' + esc(im.src) + '" alt="' + esc(im.alt) + '"' +
+            (im.logo ? ' class="logo"' : '') + focus({ imageFocus: im.focus }) + '>';
+        }).join("") + '</figure>'
       : '';
     return '' +
-      '<article class="card portrait' + (photo ? ' has-photo' : '') + '">' +
+      '<article class="card portrait' + (photo ? ' has-photo' : '') + tributeClass(m) + '" ' + (m.tribute ? accentStyle(m) : '') + '>' +
         (photo ? '<div class="pt-body">' : '') +
         '<span class="tag">' + esc(p.kicker || "Portrait") + ' · ' + esc(m.label) + '</span>' +
         '<h3>' + esc(p.name) + '</h3>' +
